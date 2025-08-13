@@ -132,3 +132,22 @@
   visibility: visible !important;
   transform: none !important;
 }
+
+
+/* ---- DISEÑOS: que siempre “ocupen lugar” aunque AOS no pinte ---- */
+#disenos .card { opacity: 1; visibility: visible; }
+
+/* Thumbs y fotos: que se vean sí o sí y con buena proporción */
+#disenos .thumb { aspect-ratio: 16 / 10; background: var(--panel); overflow: hidden; }
+#disenos .thumb img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* El enlace de la card ocupa todo el bloque (mejor click area) */
+#disenos .card > a{ display:block; height:100%; color:inherit; text-decoration:none; }
+
+/* Parche focalizado: si por lo que sea AOS no aplica la clase aos-animate, no escondas */
+#disenos [data-aos]{ opacity: 1 !important; transform: none !important; visibility: visible !important; }
