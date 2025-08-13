@@ -1,54 +1,49 @@
 /* =========================================================
-   app.js — Bootstrap, navegación y wiring de módulos UI
-   - Dominio en clases.js; la UI se arma en home.js / tienda.js.
+   app.js — Bootstrap mínimo (sin ES modules)
+   - Toma Sistema desde window.Sistema (clases.js)
+   - Pasa la instancia a Tienda (window.Tienda)
+   - Renderiza Precios y Solicitar si existen en el DOM
+   - Refresca AOS después de renderizar
 ========================================================= */
-import { Sistema } from './clases.js'
-import { setSistema as setHomeSistema, renderDisenos } from './home.js'
-import { setSistema as setTiendaSistema, renderPrecios, renderFormulario } from './tienda.js'
 
-let sistema = null
+(function () {
+  document.addEventListener('DOMContentLoaded', () => {
+    // ✨ AOS (si está cargado)
+    if (window.AOS) {
+      AOS.init({ once: true, offset: 20, duration: 500, easing: 'ease-out' });
+    }
 
-document.addEventListener('DOMContentLoaded', ()=>{
-  // ✅ AOS
-  if(window.AOS){ AOS.init() }
+    // 🧠 Dominio (Sistema desde clases.js)
+    const SistemaCtor = window.Sistema;
+    if (!SistemaCtor) {
+      console.error('No se encontró window.Sistema (clases.js).');
+      return;
+    }
+    const sistema = new SistemaCtor();
+    if (typeof sistema.precargar === 'function') {
+      try { sistema.precargar(); } catch (_) {}
+    }
 
-  // 🧠 Dominio
-  sistema = new Sistema()
-  sistema.precargar()
+    // 🛒 UI Tienda (desde tienda.js)
+    if (!window.Tienda || typeof window.Tienda.setSistema !== 'function') {
+      console.error('No se encontró window.Tienda (tienda.js).');
+      return;
+    }
+    window.Tienda.setSistema(sistema);
 
-  // Compartimos instancia a módulos UI
-  setHomeSistema(sistema)
-  setTiendaSistema(sistema)
+    // 🧩 Render dinámico de secciones (si existen)
+    const scPrecios   = document.getElementById('precios');
+    const scSolicitar = document.getElementById('solicitar');
 
-  // 🟢 WhatsApp flotante (acá se cambia el número)
-  let w = document.getElementById('btn-wapp')
-  if(w){ w.href = "https://wa.me/59892992182" }
+    if (scPrecios)   { window.Tienda.renderPrecios(scPrecios); }
+    if (scSolicitar) { window.Tienda.renderFormulario(scSolicitar); }
 
-  // 🗺️ Navegación por data-section
-  let app = document.getElementById('app')
-  let botones = document.querySelectorAll('[data-section]')
-  for (let b of botones){
-    b.addEventListener('click', (e)=>{
-      let sec = b.getAttribute('data-section')
-      navegar(sec)
-    })
-  }
+    // 🟢 WhatsApp flotante (cambiá el número si querés)
+    window.WAPP_NUM = window.WAPP_NUM || "59892992182";
+    const wbtn = document.getElementById('btn-wapp');
+    if (wbtn) wbtn.href = "https://wa.me/" + window.WAPP_NUM;
 
-  // 🏠 Carga inicial
-  navegar('disenos')
-})
-
-/* ================================
-   🚏 Router minimalista
-================================ */
-function navegar(sec){
-  let app = document.getElementById('app')
-  if(!app) return
-
-  if(sec === 'disenos'){ renderDisenos(app); return }
-  if(sec === 'precios'){ renderPrecios(app); return }
-  if(sec === 'solicitar'){ renderFormulario(app); return }
-
-  // fallback
-  app.innerHTML = `<section class = "bloque"><h1>Página en construcción</h1></section>`
-}
+    // 🔁 AOS refresh después de inyectar HTML
+    setTimeout(() => { if (window.AOS) AOS.refreshHard(); }, 150);
+  });
+})();

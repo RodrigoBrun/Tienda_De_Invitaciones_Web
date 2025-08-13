@@ -1,0 +1,134 @@
+# 🌿 Tienda de Invitaciones Web — Premium & Responsive
+
+Proyecto profesional de invitaciones web personalizables, con diseño **premium**, responsive y optimizado para una experiencia fluida en cualquier dispositivo.
+
+## 📋 Índice
+- [Descripción](#-descripción)
+- [Características Principales](#-características-principales)
+- [Estructura de Archivos](#-estructura-de-archivos)
+- [Tecnologías Usadas](#-tecnologías-usadas)
+- [Estilo y Responsividad](#-estilo-y-responsividad)
+- [Animaciones y Efectos](#-animaciones-y-efectos)
+- [Personalización](#-personalización)
+- [Cómo Ejecutar](#-cómo-ejecutar)
+- [Notas de Mantenimiento](#-notas-de-mantenimiento)
+- [Licencia](#-licencia)
+
+---
+
+## 📖 Descripción
+Este proyecto es una **landing page premium** para mostrar, vender y gestionar invitaciones web personalizadas.  
+El diseño es **minimalista, moderno y profesional**, inspirado en **Greenvelope**, con uso extensivo de **CSS variables** para facilitar cambios de color y tipografía.
+
+La página está optimizada para:
+- Desktop
+- Tablets
+- Dispositivos móviles (mobile-first)
+
+---
+
+## ✨ Características Principales
+
+- 🎯 **Diseño Mobile-First** con escalado en Desktop por media queries.
+- 🎨 **Variables CSS** para personalizar colores, tipografías y espaciados de forma global.
+- 🖼 **Cards responsive** para diseños, ejemplos y testimonios.
+- 📐 Uso de **aspect-ratio** para mantener proporciones perfectas en imágenes.
+- 🪶 **Hover suave** en tarjetas con `transform`.
+- 📚 **Código estructurado y comentado** siguiendo buenas prácticas.
+- ⚡ **Carga optimizada** de tipografías y librerías.
+- 🪄 Preparado para animaciones con **AOS.js**.
+- 💬 Bloques de testimonios con diseño profesional.
+- 📱 Botones y secciones optimizados para **interacción táctil**.
+
+---
+
+## 📂 Estructura de Archivos
+
+📁 proyecto/
+├── 📁 css/
+│ ├── home.css # Estilos específicos de la página principal
+│ ├── variables.css # Variables globales de color, tipografía y layout
+│ └── estilos.css # Estilos generales y comunes
+├── 📁 js/
+│ ├── main.js # Lógica y eventos principales
+│ └── librerias/ # Librerías externas (AOS, etc.)
+├── 📁 img/ # Imágenes y recursos gráficos
+├── index.html # Página principal
+└── README.md # Documentación del proyecto
+
+yaml
+Copiar
+Editar
+
+---
+
+## 🛠 Tecnologías Usadas
+
+- **HTML5** — Estructura semántica y accesible.
+- **CSS3** — Diseño responsive con flexbox, grid y variables.
+- **JavaScript ES6+** — Interacciones y control de UI.
+- **AOS.js** — Animaciones al hacer scroll.
+- **Google Fonts** — Tipografía personalizada.
+- **Phosphor Icons** — Íconos ligeros y escalables.
+
+---
+
+## 📐 Estilo y Responsividad
+
+- **Mobile-First**: todo parte de un diseño pensado para pantallas pequeñas, escalando hacia desktop con media queries.
+- Tipografías y paddings ajustados según ancho.
+- Uso de `clamp()` para títulos fluidos.
+- Botones y acciones apiladas en móviles, alineadas horizontalmente en desktop.
+
+---
+
+## 🎬 Animaciones y Efectos
+
+- Animaciones de entrada suaves con **AOS.js**.
+- Hover en tarjetas (`translateY(-3px)`).
+- Transiciones CSS para efectos fluidos en hover/focus.
+
+---
+
+## 🎨 Personalización
+
+Para cambiar colores globales:
+1. Abrir `css/variables.css`
+2. Modificar valores como:
+   ```css
+   --color-principal: #22c55e;
+   --color-secundario: #60a5fa;
+   --acento: #d97706;
+Guardar y refrescar la página.
+
+Para cambiar tipografía:
+
+Editar la importación de Google Fonts en variables.css y actualizar la variable --font-tit.
+
+🚀 Cómo Ejecutar
+Clonar este repositorio:
+
+bash
+Copiar
+Editar
+git clone https://github.com/usuario/tienda-invitaciones-web.git
+Abrir index.html en tu navegador.
+
+(Opcional) Levantar un servidor local para pruebas:
+
+bash
+Copiar
+Editar
+npx serve
+📝 Notas de Mantenimiento
+Antes de subir cambios, verificar compatibilidad en móvil y desktop.
+
+Comprimir imágenes para optimizar carga.
+
+Si se agregan nuevas secciones, mantener la consistencia visual usando las variables CSS existentes.
+
+Revisar que las animaciones AOS tengan data-aos-delay y data-aos-duration coherentes para no saturar al usuario.
+
+📄 Licencia
+Este proyecto se distribuye bajo licencia MIT.
+Puedes usarlo, modificarlo y adaptarlo, siempre manteniendo los créditos originales.

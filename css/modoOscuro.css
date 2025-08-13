@@ -1,83 +1,208 @@
-/* =========================================================
-   modo-oscuro.css — Overrides de variables + pequeños ajustes
-   Actúa cuando <body> tiene la clase .modo-oscuro
-========================================================= */
+/* =============================================================================
+   modo-oscuro.css — Tema oscuro (opt-in con .modo-oscuro en <body>)
+   Diseño: Mobile-first. Nada de !important salvo en casos necesarios (select/UA).
+   ========================================================================== */
 
-/* 🎛️ Paleta opuesta (dark) */
+/* ============================================================================
+   1) Tokens de color/sombra para DARK THEME
+   — Se aplican a todo el sistema cuando <body> .modo-oscuro está presente.
+   ========================================================================== */
 body.modo-oscuro{
-  --fondo: #0f1115;     /* opuesto del beige: gris azulado muy oscuro */
-  --panel: #171a1f;     /* panel cards */
-  --texto: #f5f5f5;     /* texto principal muy claro */
-  --texto-sec: #b8b8b8; /* texto secundario gris claro */
-  --borde: #262a31;     /* bordes en dark */
+  /* Superficies base */
+  --fondo: #0f1115;          /* page/bg principal */
+  --panel: #171a1f;          /* cards/fieldset/nav panes */
+  --borde: #262a31;          /* separadores/bordes */
 
-  /* Acentos: subimos luminosidad para mejor contraste en dark */
-  --acento: #e0c072;    /* dorado más claro en dark */
-  --acento-2: #d0b267;
+  /* Tipografía */
+  --texto: #f6f7f8;          /* copia principal */
+  --texto-sec: #b8b8b8;      /* copy secundaria / hints */
 
-  /* Sombra más intensa en fondos oscuros */
+  /* Acentos (dorado sube luz en dark) */
+  --acento:  #e0c072;
+  --acento-2:#d0b267;
+
+  /* Campos / controles */
+  --campo: #12161c;          /* fondo inputs/selects/textarea */
+  --campo-borde: var(--borde);
+  --campo-focus: rgba(224,192,114,.22); /* halo dorado suave */
+
+  /* Decoración */
   --sombra: 0 12px 30px rgba(0,0,0,.45);
 }
 
-/* 🧭 Header translúcido en dark (usa las variables ya cambiadas) */
+/* Fondo general (por si el tema base usa otra cosa) */
+body.modo-oscuro{
+  background: var(--fondo);
+  color: var(--texto);
+}
+
+/* ============================================================================
+   2) Superficies de layout
+   ========================================================================== */
+
+/* Header */
 body.modo-oscuro .header{
-  background: rgba(23,26,31,.92); /* basado en --panel dark */
+  background: rgba(23,26,31,.92);
   border-bottom-color: var(--borde);
 }
+body.modo-oscuro .header.with-shadow{ box-shadow: 0 10px 26px rgba(0,0,0,.55); }
 
-/* 🌫️ Sombra del header en dark (ligeramente más intensa) */
-body.modo-oscuro .header.with-shadow{
-  box-shadow: 0 10px 26px rgba(0,0,0,.55);
-}
+/* Sidebar + overlay */
+body.modo-oscuro .sidebar{ background: var(--panel); border-left:1px solid var(--borde); }
+body.modo-oscuro .sidebar-links .nav-link:hover{ background:#1e232b; }
+body.modo-oscuro .overlay{ background: rgba(0,0,0,.6); }
 
-/* 📋 Cards, inputs y tablas ya toman los nuevos tokens,
-   pero afinamos algunos fondos “duros” que en light eran beiges */
-body.modo-oscuro .sidebar-links .nav-link:hover{ background: #1e232b; }
-body.modo-oscuro .btn-link:hover{ background: #1e232b; }
-
-body.modo-oscuro .tag{
-  background: #1e232b;           /* chip de tags en dark */
-  border-color: var(--borde);
-  color: var(--acento-2);
-}
-
-/* Encabezado de tabla en dark */
-body.modo-oscuro #precios .tabla thead th{
-  background: #1c2129;
-}
-
-/* Thumbs con placeholder en dark */
-body.modo-oscuro .thumb{ background: #1a1f26; }
-
-/* Overlay más opaco en dark para mayor contraste */
-body.modo-oscuro .overlay{
-  background: rgba(0,0,0,.6);
-}
-
-/* Inputs foco en dark (mismo color de foco pero sobre fondo oscuro) */
-body.modo-oscuro .input:focus,
-body.modo-oscuro .select:focus,
-body.modo-oscuro .textarea:focus{
-  border-color: var(--acento);
-  box-shadow: 0 0 0 3px rgba(224,192,114,.2);
-}
-
-/* Footer en dark */
+/* Footer */
 body.modo-oscuro .footer{
   background: var(--panel);
-  border-top-color: var(--borde);
+  border-top: 1px solid var(--borde);
   color: var(--texto-sec);
 }
 
-/* CTA mantiene dorado (mejora contraste) */
-body.modo-oscuro .btn-cta{
+/* Secciones / cards / fieldsets comunes */
+body.modo-oscuro .card,
+body.modo-oscuro .fieldset,
+body.modo-oscuro .panel-sobres{
+  background: var(--panel);
+  border: 1px solid var(--borde);
   box-shadow: var(--sombra);
 }
 
-/* Tablas: líneas separadoras */
-body.modo-oscuro .tabla{
+/* Mini superficies (thumbnails) */
+body.modo-oscuro .thumb{ background:#1a1f26; }
+
+/* ============================================================================
+   3) Componentes interactivos
+   ========================================================================== */
+
+/* 3.1 Botones */
+body.modo-oscuro .btn-link{
+  background:#151a21;
+  color: var(--texto);
+  border: 1px solid var(--borde);
+}
+body.modo-oscuro .btn-link:hover{ background:#1b2129; }
+
+/* CTA mantiene dorado y refuerza contraste en dark */
+body.modo-oscuro .btn-cta{
+  color:#1b1b1b;
+  box-shadow: var(--sombra);
+}
+
+/* 3.2 Inputs / Selects / Textareas */
+body.modo-oscuro .input,
+body.modo-oscuro .select,
+body.modo-oscuro .textarea,
+body.modo-oscuro input[type="text"],
+body.modo-oscuro input[type="date"],
+body.modo-oscuro input[type="color"],
+body.modo-oscuro select,
+body.modo-oscuro textarea{
+  background: var(--campo);
+  color: var(--texto);
+  border: 1px solid var(--campo-borde);
+}
+
+/* Placeholders legibles */
+body.modo-oscuro ::placeholder{ color:#9aa3ad; opacity:1; }
+
+/* Focus coherente */
+body.modo-oscuro .input:focus,
+body.modo-oscuro .select:focus,
+body.modo-oscuro .textarea:focus,
+body.modo-oscuro input:focus,
+body.modo-oscuro select:focus,
+body.modo-oscuro textarea:focus{
+  border-color: var(--acento);
+  box-shadow: 0 0 0 3px var(--campo-focus);
+  outline: 0;
+}
+
+/* Select y sus options (UA styles) */
+body.modo-oscuro select,
+body.modo-oscuro .select{
+  background-color: var(--panel) !important;
+  color: var(--texto) !important;
+  border: 1px solid var(--borde) !important;
+}
+body.modo-oscuro select option{
+  background-color: var(--panel) !important;
+  color: var(--texto) !important;
+}
+
+/* 3.3 Tags / chips / swatches */
+body.modo-oscuro .tag{
+  background:#1e232b;
+  border: 1px solid var(--borde);
+  color: var(--acento-2);
+}
+body.modo-oscuro .swatch{ border: 1px solid var(--borde); }
+
+/* 3.4 Detalles/summary (FAQ) */
+body.modo-oscuro details.card{ background: var(--panel); border-color: var(--borde); }
+body.modo-oscuro details > summary.info{ color: var(--texto); }
+
+/* 3.5 Mensajes */
+body.modo-oscuro .alerta{
+  background:#16211a; border:1px solid #245b3b; color:#cfe9d7;
+}
+body.modo-oscuro .alerta.is-error{
+  background:#2a1616; border-color:#6b2a2a; color:#f1c7c7;
+}
+
+/* ============================================================================
+   4) Patrones de UI específicos
+   ========================================================================== */
+
+/* 4.1 Tabla de precios coherente con dark */
+body.modo-oscuro #precios .tabla{
+  background: var(--panel);
   border-color: var(--borde);
 }
-body.modo-oscuro .tabla tbody td{
-  border-bottom-color: var(--borde);
+body.modo-oscuro #precios .tabla thead th{
+  background:#1c2129; color:var(--texto);
+  border-bottom:1px solid var(--borde);
 }
+body.modo-oscuro #precios .tabla tbody td{
+  background: var(--panel); color: var(--texto);
+  border-bottom:1px solid var(--borde);
+}
+body.modo-oscuro #precios .tabla tbody tr:nth-child(even) td{ background:#1a1f26; }
+body.modo-oscuro #precios .tabla tbody tr:hover td{ background:#20252d; }
+body.modo-oscuro #precios .tabla tbody td:last-child{ color:#f0f0f0; font-weight:700; }
+
+/* 4.2 Panel “Sobre (clásica)” */
+body.modo-oscuro .sobre-grid .sobre-item{
+  background: var(--panel);
+  border: 1px solid var(--borde);
+  border-radius: 16px;
+}
+
+/* Marco neutro por si el PNG tiene borde claro */
+body.modo-oscuro .sobre-grid .sobre-item img{ background:#0f1115; }
+
+/* Resaltado del seleccionado (>= Chrome/Edge/Firefox actuales soportan :has) */
+body.modo-oscuro .sobre-grid .sobre-item:has(input:checked){
+  border-color: var(--acento);
+  box-shadow: 0 0 0 3px var(--campo-focus);
+}
+
+/* Botón “Elegir icono de sobre” */
+body.modo-oscuro #btn-sobre-clasica{
+  background: var(--panel);
+  color: var(--texto);
+  border: 1px solid var(--borde);
+}
+body.modo-oscuro #btn-sobre-clasica:hover{ background:#1b2129; }
+
+/* ============================================================================
+   5) Micro-ajustes varios
+   ========================================================================== */
+
+/* Encabezados / labels dentro de fieldset */
+body.modo-oscuro .fieldset .label,
+body.modo-oscuro .label{ color: var(--texto); }
+
+/* Hover general de enlaces tipo link-button */
+body.modo-oscuro .btn-link:hover,
+body.modo-oscuro .sidebar-links .nav-link:hover{ background:#1e232b; }

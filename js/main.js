@@ -4,14 +4,33 @@
    - Usa data-target para navegar entre secciones
    - Mobile-first: cierra sidebar al elegir una opción
    - Fixes: overlay, stopPropagation, tecla ESC, sombra header, link activo
+   - AOS: init con opciones, respeta reduce‑motion, refresh en navegación
 ========================================================= */
 
 document.addEventListener('DOMContentLoaded', ()=>{
 
   // =========================================
-  // ✨ AOS (animaciones on-scroll)
+  // ✨ AOS (animaciones on-scroll) — Setup robusto
+  // - Respeta reduce-motion
+  // - once=true (no re-oculta)
+  // - refresh tras navegación y onload
   // =========================================
-  if(window.AOS){ AOS.init() }
+function initAOS(){
+  if(!window.AOS) return
+  let reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  AOS.init({
+    disable: reduce ? true : false,
+    once: true,
+    offset: 20,             // ⬅️ más chico para que siempre “entren”
+    duration: 500,
+    easing: 'ease-out',
+    anchorPlacement: 'top-bottom'
+  })
+}
+initAOS()
+// Refrescos por si cambia el alto/flujo
+window.addEventListener('load', ()=>{ window.AOS && AOS.refreshHard() }, { passive: true })
+
 
   // =========================================
   // 🗓️ Año en footer (auto)
@@ -69,9 +88,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
   // Evitar que los clicks internos del panel se propaguen
   if(sidebar){ sidebar.addEventListener('click', (e)=> e.stopPropagation()) }
 
-
   // =========================================
   // 🧭 Navegación por data-target (navbar + sidebar + CTAs)
+  // - Además: refrescamos AOS tras el scroll automático
   // =========================================
   let links = document.querySelectorAll('.nav-link[data-target]')
   for (let link of links){
@@ -81,6 +100,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
       irASeccion(id)
       cerrarSidebarFn()              // cerrar panel en mobile
       marcarActivo(id)
+      // 🔁 Tras movernos, refrescamos AOS por si cambió el layout
+      setTimeout(()=>{ window.AOS && AOS.refresh() }, 220)
     })
   }
 
@@ -94,6 +115,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
       if(el){
         e.preventDefault()
         el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        setTimeout(()=>{ window.AOS && AOS.refresh() }, 220)
       }
     })
   }
@@ -145,6 +167,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
       window.open(`https://wa.me/${numero}?text=${texto}`, "_blank")
       mostrarAlerta("¡Listo! Te abro WhatsApp con tus datos.", false)
       form.reset()
+      // si el form cambia el alto del layout, refrescamos AOS
+      setTimeout(()=>{ window.AOS && AOS.refresh() }, 180)
     })
   }
 
@@ -216,3 +240,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     for (let a of activos){ a.classList.add('is-active') }
   }
 })
+
+
+
