@@ -20,63 +20,53 @@ function initAOS(){
   const opts = {
     disable: reduce ? true : false,
     once: true,
-    offset: 20,            // que entren con poquito scroll
+    offset: 20,
     duration: 500,
     easing: 'ease-out',
     anchorPlacement: 'top-bottom'
   }
 
-  // Marca para el fail‑safe CSS
-  // (cuando AOS esté listo, ponemos .aos-ready en <body>)
   const markReady = () => document.body.classList.add('aos-ready')
 
-  // Intento de init + refrescos encadenados (por fuentes/imágenes/CDN)
   function tryInit(){
     if (!window.AOS) return false
     AOS.init(opts)
     markReady()
-    // refrescos defensivos (iOS/GPages tardan en pintar)
     setTimeout(()=> AOS.refresh(),     150)
     setTimeout(()=> AOS.refresh(),     450)
     setTimeout(()=> AOS.refreshHard(), 1200)
     return true
   }
 
-  // 1) Si ya está, iniciamos
-  if (tryInit()) {
-    // ok
+  if (tryInit()){
+    // listo
   } else {
-    // 2) Reintentos suaves por si el CDN demora
     let tries = 0
     const tick = setInterval(()=>{
       tries++
       if (tryInit()){
         clearInterval(tick)
       } else if (tries >= 12){
-        // 3) Fallback final: AOS no llegó → quitamos data-aos
         clearInterval(tick)
+        // Fallback extremo: mostramos todo y marcamos listo
         document.querySelectorAll('[data-aos]').forEach(el=>{
           el.removeAttribute('data-aos')
           el.style.opacity = '1'
-          el.style.visibility = 'visible'
           el.style.transform = 'none'
+          el.style.visibility = 'visible'
         })
-        markReady() // desactiva el fail‑safe CSS
+        markReady()
       }
     }, 180)
   }
 
-  // Refresco fuerte al terminar de cargar todo (imágenes, etc.)
   window.addEventListener('load', ()=>{ window.AOS && AOS.refreshHard() }, { passive:true })
-
-  // Si la pestaña vuelve a “visible”, refrescamos (Safari/iOS)
   document.addEventListener('visibilitychange', ()=>{
-    if (document.visibilityState === 'visible' && window.AOS){
-      AOS.refresh()
-    }
+    if (document.visibilityState === 'visible' && window.AOS){ AOS.refresh() }
   }, { passive:true })
 }
 initAOS()
+
 
 
 
