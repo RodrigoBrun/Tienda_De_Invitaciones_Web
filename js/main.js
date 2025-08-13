@@ -227,11 +227,15 @@ window.addEventListener('load', ()=>{ window.AOS && AOS.refreshHard() }, { passi
     }
   }
 
-  function irASeccion(id){
-    let el = document.getElementById(id)
-    if(!el) return
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }
+function irASeccion(id){
+  const el = document.getElementById(id)
+  if(!el) return
+  const header = document.querySelector('.header')
+  const offset = header ? (header.offsetHeight + 8) : 0
+  const y = el.getBoundingClientRect().top + window.pageYOffset - offset
+  window.scrollTo({ top: y, behavior: 'smooth' })
+}
+
 
   function marcarActivo(id){
     let todos = document.querySelectorAll('.nav-link[data-target]')

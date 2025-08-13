@@ -112,3 +112,10 @@
   #hero.bloque { padding-top: 26px; padding-bottom: 36px; }
   #disenos .info h3 { font-size: 18px; }
 }
+
+
+/* Que ninguna sección quede oculta debajo del header fijo */
+.seccion { scroll-margin-top: calc(var(--alto-header) + 12px); }
+
+/* Si querés ser más específico */
+#disenos { scroll-margin-top: calc(var(--alto-header) + 12px); }

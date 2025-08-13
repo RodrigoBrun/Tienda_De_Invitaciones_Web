@@ -206,3 +206,8 @@ body.modo-oscuro .label{ color: var(--texto); }
 /* Hover general de enlaces tipo link-button */
 body.modo-oscuro .btn-link:hover,
 body.modo-oscuro .sidebar-links .nav-link:hover{ background:#1e232b; }
+
+
+
+/* Si por alguna razón AOS no corre, que igual se muestre todo */
+[data-aos] { visibility: visible; opacity: 1; transform: none; }
