@@ -119,3 +119,16 @@
 
 /* Si querés ser más específico */
 #disenos { scroll-margin-top: calc(var(--alto-header) + 12px); }
+
+
+/* --- Fallback AOS para GitHub Pages: que no quede oculto si AOS no carga --- */
+#disenos [data-aos],
+#caracteristicas [data-aos],
+#precios   [data-aos],
+#faq       [data-aos],
+#solicitar [data-aos],
+#contacto  [data-aos]{
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
