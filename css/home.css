@@ -1,25 +1,45 @@
-/* =========================================
-   home.css — Hero, características, diseños,
-   ejemplos y testimonios (ajustes finos)
-   - Mobile-first. Desktop escala por media queries.
-========================================= */
+/* =========================================================
+   home.css — Home (Hero, Características, Diseños, etc.)
+   Enfoque: mobile‑first, escalado en desktop, sin “parches”.
+   - Layouts claros y tipografías coherentes
+   - Thumbs con proporciones consistentes
+   - Fallback AOS limpio (sin tocar cada sección)
+========================================================= */
 
-/* ======= HERO ======= */
-/* Separación vertical más generosa en primera sección */
+/* ========== Reglas base del home ========== */
+
+/* Que ninguna sección se esconda bajo el header fijo */
+.seccion { scroll-margin-top: calc(var(--alto-header) + 12px); }
+
+/* Enlaces de cards ocupan toda la tarjeta (mejor área de toque) */
+.card > a {
+  display: block;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Imágenes “sanas” por defecto */
+.thumb { background: var(--panel); overflow: hidden; }
+.thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* ========== HERO ========== */
 #hero.bloque {
-  padding-top: 16px;
+  /* espaciado cómodo en mobile */
+  padding-top: 44px;
   padding-bottom: 28px;
+
+  /* centrado y composición */
   display: grid;
   place-items: center;
   text-align: center;
 }
 
-/* ✨ Icono del título un poquito más grande en hero */
 #hero .titulo {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
   justify-content: center;
+  gap: 10px;
   margin-bottom: 12px;
 }
 #hero .titulo i {
@@ -30,75 +50,53 @@
   margin: 0;
   font-family: var(--font-tit);
   font-weight: 700;
-  font-size: clamp(22px, 6vw, 40px);
+  font-size: clamp(22px, 8vw, 28px);
   line-height: 1.15;
-  letter-spacing: -.01em;
+  letter-spacing: -0.01em;
   max-width: 22ch;
 }
 
-/* Texto de apoyo con max-width para lectura cómoda */
 #hero .texto-sec {
   max-width: 58ch;
-  margin: 10px auto 20px;
+  margin: 10px auto 16px;
+  font-size: 0.95rem;
 }
 
-/* Acciones en hero */
 #hero .acciones {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px 16px;
+  flex-direction: column;   /* apilado en mobile */
   align-items: center;
   justify-content: center;
+  gap: 10px;
+  width: 100%;
 }
-#hero .acciones .btn-cta {
-  min-width: 210px;
+#hero .acciones .btn-cta,
+#hero .acciones .btn-link {
+  width: 100%;
+  max-width: 320px;         /* cómodo para pulgar */
   text-align: center;
 }
-#hero .acciones .btn-link {
-  padding: 10px 12px;
-}
+#hero .acciones .btn-cta { min-width: 210px; }
 
-/* Mobile estrecho */
-@media (max-width: 480px) {
-  #hero.bloque { padding-top: 44px; padding-bottom: 28px; }
-
-  #hero .titulo h1 {
-    font-size: clamp(22px, 8vw, 28px);
-  }
-
-  #hero .texto-sec {
-    font-size: 0.95rem;
-    margin-bottom: 16px;
-  }
-
-  /* Botones apilados */
-  #hero .acciones {
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-  }
-  #hero .acciones .btn-cta,
-  #hero .acciones .btn-link {
-    width: 100%;
-    max-width: 320px;
-  }
-}
-
-/* ======= CARACTERÍSTICAS ======= */
+/* ========== CARACTERÍSTICAS ========== */
 #caracteristicas .card .info { padding: 16px; }
 #caracteristicas .card h3 { font-size: 16px; margin-bottom: 6px; }
 
-/* ======= DISEÑOS (cards) ======= */
+/* ========== DISEÑOS (cards) ========== */
+/* proporción consistente y micro elevación en hover (solo puntero) */
 #disenos .thumb { aspect-ratio: 16 / 10; }
-#disenos .card:hover { transform: translateY(-3px); }
+@media (hover:hover) {
+  #disenos .card:hover { transform: translateY(-3px); }
+}
+
 #disenos .info h3 { font-size: 17px; }
 #disenos .info p  { font-size: 14px; }
 
-/* ======= EJEMPLOS ======= */
+/* ========== EJEMPLOS ========== */
 #ejemplos .thumb { aspect-ratio: 16 / 9; }
 #ejemplos figure.card .info { padding-top: 10px; }
 
-/* ======= TESTIMONIOS ======= */
+/* ========== TESTIMONIOS ========== */
 #testimonios blockquote.card { border-left: 4px solid var(--acento); }
 #testimonios blockquote.card .info p { margin: 0; }
 #testimonios blockquote.card .info p + p {
@@ -106,48 +104,34 @@
   color: var(--texto-sec);
 }
 
-/* ======= Desktop refinements ======= */
+/* ========== Desktop refinements ========== */
 @media (min-width: 900px){
-  /* Hero más aire en desktop */
+  /* Hero con un poco más de aire en desktop */
   #hero.bloque { padding-top: 26px; padding-bottom: 36px; }
+  #hero .titulo h1 { font-size: clamp(28px, 4.2vw, 40px); }
   #disenos .info h3 { font-size: 18px; }
+
+  /* Acciones en hero en línea (si hay espacio) */
+  #hero .acciones {
+    flex-direction: row;
+    gap: 12px 16px;
+    width: auto;
+  }
+  #hero .acciones .btn-cta,
+  #hero .acciones .btn-link {
+    width: auto;
+    max-width: none;
+  }
 }
 
-
-/* Que ninguna sección quede oculta debajo del header fijo */
-.seccion { scroll-margin-top: calc(var(--alto-header) + 12px); }
-
-/* Si querés ser más específico */
-#disenos { scroll-margin-top: calc(var(--alto-header) + 12px); }
-
-
-/* --- Fallback AOS para GitHub Pages: que no quede oculto si AOS no carga --- */
-#disenos [data-aos],
-#caracteristicas [data-aos],
-#precios   [data-aos],
-#faq       [data-aos],
-#solicitar [data-aos],
-#contacto  [data-aos]{
+/* =========================================================
+   AOS — Fallback “limpio”
+   Si el JS detecta que AOS no cargó o está deshabilitado,
+   agrega la clase .aos-disabled al <html>. Con eso basta.
+========================================================= */
+html.aos-disabled [data-aos]{
   opacity: 1 !important;
   visibility: visible !important;
   transform: none !important;
+  transition: none !important;
 }
-
-
-/* ---- DISEÑOS: que siempre “ocupen lugar” aunque AOS no pinte ---- */
-#disenos .card { opacity: 1; visibility: visible; }
-
-/* Thumbs y fotos: que se vean sí o sí y con buena proporción */
-#disenos .thumb { aspect-ratio: 16 / 10; background: var(--panel); overflow: hidden; }
-#disenos .thumb img{
-  display:block;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-/* El enlace de la card ocupa todo el bloque (mejor click area) */
-#disenos .card > a{ display:block; height:100%; color:inherit; text-decoration:none; }
-
-/* Parche focalizado: si por lo que sea AOS no aplica la clase aos-animate, no escondas */
-#disenos [data-aos]{ opacity: 1 !important; transform: none !important; visibility: visible !important; }
