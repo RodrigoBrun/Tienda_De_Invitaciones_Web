@@ -26,36 +26,58 @@ function initAOS(){
     anchorPlacement: 'top-bottom'
   }
 
-  // Si AOS ya está disponible → init directo
-  if (window.AOS){
+  // Marca para el fail‑safe CSS
+  // (cuando AOS esté listo, ponemos .aos-ready en <body>)
+  const markReady = () => document.body.classList.add('aos-ready')
+
+  // Intento de init + refrescos encadenados (por fuentes/imágenes/CDN)
+  function tryInit(){
+    if (!window.AOS) return false
     AOS.init(opts)
+    markReady()
+    // refrescos defensivos (iOS/GPages tardan en pintar)
+    setTimeout(()=> AOS.refresh(),     150)
+    setTimeout(()=> AOS.refresh(),     450)
+    setTimeout(()=> AOS.refreshHard(), 1200)
+    return true
+  }
+
+  // 1) Si ya está, iniciamos
+  if (tryInit()) {
+    // ok
   } else {
-    // Reintentos suaves por si el CDN demora
+    // 2) Reintentos suaves por si el CDN demora
     let tries = 0
     const tick = setInterval(()=>{
       tries++
-      if (window.AOS){
-        AOS.init(opts)
+      if (tryInit()){
         clearInterval(tick)
-        setTimeout(()=> AOS.refresh(), 120)
-      } else if (tries >= 10){
-        // Fallback: aseguramos que nada quede oculto si AOS nunca cargó
+      } else if (tries >= 12){
+        // 3) Fallback final: AOS no llegó → quitamos data-aos
         clearInterval(tick)
-        try{
-          document.querySelectorAll('[data-aos]').forEach(el=>{
-            el.style.opacity = '1'
-            el.style.visibility = 'visible'
-            el.style.transform = 'none'
-          })
-        }catch(_){}
+        document.querySelectorAll('[data-aos]').forEach(el=>{
+          el.removeAttribute('data-aos')
+          el.style.opacity = '1'
+          el.style.visibility = 'visible'
+          el.style.transform = 'none'
+        })
+        markReady() // desactiva el fail‑safe CSS
       }
-    }, 150)
+    }, 180)
   }
 
   // Refresco fuerte al terminar de cargar todo (imágenes, etc.)
   window.addEventListener('load', ()=>{ window.AOS && AOS.refreshHard() }, { passive:true })
+
+  // Si la pestaña vuelve a “visible”, refrescamos (Safari/iOS)
+  document.addEventListener('visibilitychange', ()=>{
+    if (document.visibilityState === 'visible' && window.AOS){
+      AOS.refresh()
+    }
+  }, { passive:true })
 }
 initAOS()
+
 
 
   // =========================================
