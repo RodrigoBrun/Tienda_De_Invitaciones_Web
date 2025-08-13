@@ -16,20 +16,46 @@ document.addEventListener('DOMContentLoaded', ()=>{
   // - refresh tras navegación y onload
   // =========================================
 function initAOS(){
-  if(!window.AOS) return
-  let reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  AOS.init({
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const opts = {
     disable: reduce ? true : false,
     once: true,
-    offset: 20,             // ⬅️ más chico para que siempre “entren”
+    offset: 20,            // que entren con poquito scroll
     duration: 500,
     easing: 'ease-out',
     anchorPlacement: 'top-bottom'
-  })
+  }
+
+  // Si AOS ya está disponible → init directo
+  if (window.AOS){
+    AOS.init(opts)
+  } else {
+    // Reintentos suaves por si el CDN demora
+    let tries = 0
+    const tick = setInterval(()=>{
+      tries++
+      if (window.AOS){
+        AOS.init(opts)
+        clearInterval(tick)
+        setTimeout(()=> AOS.refresh(), 120)
+      } else if (tries >= 10){
+        // Fallback: aseguramos que nada quede oculto si AOS nunca cargó
+        clearInterval(tick)
+        try{
+          document.querySelectorAll('[data-aos]').forEach(el=>{
+            el.style.opacity = '1'
+            el.style.visibility = 'visible'
+            el.style.transform = 'none'
+          })
+        }catch(_){}
+      }
+    }, 150)
+  }
+
+  // Refresco fuerte al terminar de cargar todo (imágenes, etc.)
+  window.addEventListener('load', ()=>{ window.AOS && AOS.refreshHard() }, { passive:true })
 }
 initAOS()
-// Refrescos por si cambia el alto/flujo
-window.addEventListener('load', ()=>{ window.AOS && AOS.refreshHard() }, { passive: true })
 
 
   // =========================================
