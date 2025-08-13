@@ -16,56 +16,66 @@ document.addEventListener('DOMContentLoaded', ()=>{
   // - refresh tras navegación y onload
   // =========================================
 function initAOS(){
-  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  // ¿Usuario con reducir movimiento? → no animamos, pero mostramos todo
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // util para mostrar todo (sin animación)
+  const showAll = () => {
+    document.documentElement.classList.add('aos-disabled'); // activa el CSS de fallback
+    try{
+      document.querySelectorAll('[data-aos]').forEach(el=>{
+        el.style.opacity = '1';
+        el.style.visibility = 'visible';
+        el.style.transform = 'none';
+      });
+    }catch(_){}
+  };
+
+  if (reduce) { showAll(); return; }
+
   const opts = {
-    disable: reduce ? true : false,
+    // ¡NO deshabilitamos en mobile! (Safari iOS es el caso problemático)
+    disable: false,
     once: true,
     offset: 20,
     duration: 500,
     easing: 'ease-out',
     anchorPlacement: 'top-bottom'
-  }
+  };
 
-  const markReady = () => document.body.classList.add('aos-ready')
-
-  function tryInit(){
-    if (!window.AOS) return false
-    AOS.init(opts)
-    markReady()
-    setTimeout(()=> AOS.refresh(),     150)
-    setTimeout(()=> AOS.refresh(),     450)
-    setTimeout(()=> AOS.refreshHard(), 1200)
-    return true
-  }
-
-  if (tryInit()){
-    // listo
+  // init inmediato si AOS ya está
+  if (window.AOS){
+    AOS.init(opts);
+    // micro refresh por si cambia el layout después del primer pintado
+    setTimeout(()=> AOS.refresh(), 200);
   } else {
-    let tries = 0
+    // reintentos suaves por si el CDN tarda
+    let tries = 0;
     const tick = setInterval(()=>{
-      tries++
-      if (tryInit()){
-        clearInterval(tick)
-      } else if (tries >= 12){
-        clearInterval(tick)
-        // Fallback extremo: mostramos todo y marcamos listo
-        document.querySelectorAll('[data-aos]').forEach(el=>{
-          el.removeAttribute('data-aos')
-          el.style.opacity = '1'
-          el.style.transform = 'none'
-          el.style.visibility = 'visible'
-        })
-        markReady()
+      tries++;
+      if (window.AOS){
+        clearInterval(tick);
+        AOS.init(opts);
+        setTimeout(()=> AOS.refresh(), 200);
+      } else if (tries >= 12){   // ~1.8s
+        clearInterval(tick);
+        showAll();               // mostramos todo sin animar
       }
-    }, 180)
+    }, 150);
   }
 
-  window.addEventListener('load', ()=>{ window.AOS && AOS.refreshHard() }, { passive:true })
-  document.addEventListener('visibilitychange', ()=>{
-    if (document.visibilityState === 'visible' && window.AOS){ AOS.refresh() }
-  }, { passive:true })
+  // refresco fuerte cuando termina de cargar todo (imágenes incl.)
+  window.addEventListener('load', ()=>{ window.AOS && AOS.refreshHard() }, { passive:true });
+
+  // watchdog: si a los 2.5s siguen elementos invisibles, forzamos mostrar
+  setTimeout(()=>{
+    const invisibles = Array.from(document.querySelectorAll('[data-aos]'))
+      .filter(el => getComputedStyle(el).opacity === '0');
+    if (invisibles.length){ showAll(); }
+  }, 2500);
 }
-initAOS()
+initAOS();
+
 
 
 
