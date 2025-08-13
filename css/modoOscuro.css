@@ -1,0 +1,83 @@
+/* =========================================================
+   modo-oscuro.css — Overrides de variables + pequeños ajustes
+   Actúa cuando <body> tiene la clase .modo-oscuro
+========================================================= */
+
+/* 🎛️ Paleta opuesta (dark) */
+body.modo-oscuro{
+  --fondo: #0f1115;     /* opuesto del beige: gris azulado muy oscuro */
+  --panel: #171a1f;     /* panel cards */
+  --texto: #f5f5f5;     /* texto principal muy claro */
+  --texto-sec: #b8b8b8; /* texto secundario gris claro */
+  --borde: #262a31;     /* bordes en dark */
+
+  /* Acentos: subimos luminosidad para mejor contraste en dark */
+  --acento: #e0c072;    /* dorado más claro en dark */
+  --acento-2: #d0b267;
+
+  /* Sombra más intensa en fondos oscuros */
+  --sombra: 0 12px 30px rgba(0,0,0,.45);
+}
+
+/* 🧭 Header translúcido en dark (usa las variables ya cambiadas) */
+body.modo-oscuro .header{
+  background: rgba(23,26,31,.92); /* basado en --panel dark */
+  border-bottom-color: var(--borde);
+}
+
+/* 🌫️ Sombra del header en dark (ligeramente más intensa) */
+body.modo-oscuro .header.with-shadow{
+  box-shadow: 0 10px 26px rgba(0,0,0,.55);
+}
+
+/* 📋 Cards, inputs y tablas ya toman los nuevos tokens,
+   pero afinamos algunos fondos “duros” que en light eran beiges */
+body.modo-oscuro .sidebar-links .nav-link:hover{ background: #1e232b; }
+body.modo-oscuro .btn-link:hover{ background: #1e232b; }
+
+body.modo-oscuro .tag{
+  background: #1e232b;           /* chip de tags en dark */
+  border-color: var(--borde);
+  color: var(--acento-2);
+}
+
+/* Encabezado de tabla en dark */
+body.modo-oscuro #precios .tabla thead th{
+  background: #1c2129;
+}
+
+/* Thumbs con placeholder en dark */
+body.modo-oscuro .thumb{ background: #1a1f26; }
+
+/* Overlay más opaco en dark para mayor contraste */
+body.modo-oscuro .overlay{
+  background: rgba(0,0,0,.6);
+}
+
+/* Inputs foco en dark (mismo color de foco pero sobre fondo oscuro) */
+body.modo-oscuro .input:focus,
+body.modo-oscuro .select:focus,
+body.modo-oscuro .textarea:focus{
+  border-color: var(--acento);
+  box-shadow: 0 0 0 3px rgba(224,192,114,.2);
+}
+
+/* Footer en dark */
+body.modo-oscuro .footer{
+  background: var(--panel);
+  border-top-color: var(--borde);
+  color: var(--texto-sec);
+}
+
+/* CTA mantiene dorado (mejora contraste) */
+body.modo-oscuro .btn-cta{
+  box-shadow: var(--sombra);
+}
+
+/* Tablas: líneas separadoras */
+body.modo-oscuro .tabla{
+  border-color: var(--borde);
+}
+body.modo-oscuro .tabla tbody td{
+  border-bottom-color: var(--borde);
+}

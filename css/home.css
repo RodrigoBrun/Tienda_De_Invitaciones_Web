@@ -1,0 +1,44 @@
+/* =========================================
+   home.css — Hero, características, diseños,
+   ejemplos y testimonios (ajustes finos)
+   - Mobile‑first. Desktop escala por media queries.
+========================================= */
+
+/* ======= HERO ======= */
+/* Separación vertical más generosa en primera sección */
+#hero.bloque { padding-top: 16px; padding-bottom: 28px; }
+
+/* ✨ Icono del título un poquito más grande en hero */
+#hero .titulo i { font-size: 24px; }
+
+/* Texto de apoyo con max-width para lectura cómoda */
+#hero .texto-sec { max-width: 58ch; }
+
+/* ======= CARACTERÍSTICAS ======= */
+#caracteristicas .card .info { padding: 16px; }
+#caracteristicas .card h3 { font-size: 16px; margin-bottom: 6px; }
+
+/* ======= DISEÑOS (cards) ======= */
+/* Altura visual coherente en thumbs y suave hover */
+#disenos .thumb { aspect-ratio: 16 / 10; }
+#disenos .card:hover { transform: translateY(-3px); }
+
+/* Ajustes de tipografía */
+#disenos .info h3 { font-size: 17px; }
+#disenos .info p  { font-size: 14px; }
+
+/* ======= EJEMPLOS ======= */
+#ejemplos .thumb { aspect-ratio: 16 / 9; }
+#ejemplos figure.card .info { padding-top: 10px; }
+
+/* ======= TESTIMONIOS ======= */
+#testimonios blockquote.card { border-left: 4px solid var(--acento); }
+#testimonios blockquote.card .info p { margin: 0; }
+#testimonios blockquote.card .info p + p { margin-top: 8px; color: var(--texto-sec); }
+
+/* ======= Desktop refinements ======= */
+@media (min-width: 900px){
+  /* Hero más aire en desktop */
+  #hero.bloque { padding-top: 26px; padding-bottom: 36px; }
+  #disenos .info h3 { font-size: 18px; }
+}

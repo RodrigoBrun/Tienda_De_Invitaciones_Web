@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang = "es">
+<head>
+  <meta charset = "UTF-8">
+  <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+
+  <title>Tienda de Invitaciones Web — RB</title>
+
+  <!-- ================================
+       🎨 Fuentes + Iconos + AOS
+  ================================= -->
+  <link rel = "preconnect" href = "https://fonts.googleapis.com">
+  <link rel = "preconnect" href = "https://fonts.gstatic.com" crossorigin>
+  <link href = "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel = "stylesheet">
+  <link rel = "stylesheet" href = "https://unpkg.com/aos@2.3.4/dist/aos.css">
+  <script src = "https://unpkg.com/@phosphor-icons/web"></script>
+
+  <!-- ================================
+       🧩 Tus CSS (mobile‑first los hacemos ahora)
+  ================================= -->
+  <link rel = "stylesheet" href = "./css/variables.css">
+  <link rel = "stylesheet" href = "./css/home.css">
+  <link rel = "stylesheet" href = "./css/tienda.css">
+  <link rel = "stylesheet" href = "./css/modoOscuro.css"> 
+</head>
+
+<body>
+<!-- ================================
+     🧭 Navbar (patrón propio)
+     - Logo a la izquierda, CTA + hamburguesa a la derecha
+================================= -->
+<header class = "header">
+  <div class = "container header-row">
+    <div class = "brand">
+      <i class = "ph ph-seal-check"></i>
+      <span class = "brand-title">Invitaciones Digitales</span>
+    </div>
+
+    <nav class = "nav hide-mobile">
+      <a class = "btn-link nav-link" data-target = "hero">Inicio</a>
+      <a class = "btn-link nav-link" data-target = "disenos">Ver diseños</a>
+      <a class = "btn-link nav-link" data-target = "precios">Precios</a>
+      <a class = "btn-link nav-link" data-target = "faq">FAQ</a>
+      <a class = "btn-link nav-link" data-target = "contacto">Contacto</a>
+    </nav>
+
+    <div class = "header-actions">
+      <button id = "btn-modo-oscuro" class = "btn-link icon-only" aria-label = "Modo oscuro">
+        <i class = "ph ph-moon"></i>
+      </button>
+      <a class = "btn-cta" href = "#solicitar">Solicitar</a>
+      <button id = "hamburguesa" class = "btn-link icon-only hide-desktop" aria-label = "Abrir menú">
+        <i class = "ph ph-list"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ================================
+     📱 Sidebar móvil (fuera del header)
+================================= -->
+<aside id = "sidebar" class = "sidebar">
+  <div class = "sidebar-header">
+    <span>Menú</span>
+    <button id = "cerrar-sidebar" class = "btn-link icon-only" aria-label = "Cerrar">
+      <i class = "ph ph-x"></i>
+    </button>
+  </div>
+  <nav class = "sidebar-links">
+    <a class = "nav-link" data-target = "hero"><i class = "ph ph-house"></i> Inicio</a>
+    <a class = "nav-link" data-target = "disenos"><i class = "ph ph-images-square"></i> Ver diseños</a>
+    <a class = "nav-link" data-target = "precios"><i class = "ph ph-tag"></i> Precios</a>
+    <a class = "nav-link" data-target = "solicitar"><i class = "ph ph-seal-question"></i> Solicitar</a>
+    <a class = "nav-link" data-target = "faq"><i class = "ph ph-question"></i> FAQ</a>
+    <a class = "nav-link" data-target = "contacto"><i class = "ph ph-phone-call"></i> Contacto</a>
+  </nav>
+</aside>
+
+<!-- 🔳 Cortina detrás de la sidebar -->
+<div id = "overlay" class = "overlay"></div>
+
+
+
+  <!-- ================================
+       📦 Contenido (secciones fijas)
+  ================================= -->
+  <main class = "app" data-aos = "fade-up">
+
+    <!-- 🏔️ HERO -->
+    <section id = "hero" class = "bloque seccion">
+      <div class = "container">
+        <div class = "titulo">
+          <i class = "ph ph-sparkle"></i>
+          <h1>Invitaciones web elegantes y listas para compartir</h1>
+        </div>
+        <p class = "texto-sec">
+          Personalizadas, rápidas y pensadas para el celular. Música, sobre animado y RSVP (según plan).
+        </p>
+        <div class = "acciones">
+          <a class = "btn-cta" href = "#solicitar">Solicitar tarjeta</a>
+          <a class = "btn-link nav-link" data-target = "disenos">Ver diseños</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 🌟 CARACTERÍSTICAS -->
+    <section id = "caracteristicas" class = "bloque seccion">
+      <div class = "container grid">
+        <article class = "card"><div class = "info"><h3>Diseño premium</h3><p class = "texto-sec">Tipografías elegantes, balance y legibilidad.</p></div></article>
+        <article class = "card"><div class = "info"><h3>Mobile‑first</h3><p class = "texto-sec">Se ven perfectas en WhatsApp e Instagram.</p></div></article>
+        <article class = "card"><div class = "info"><h3>Interactivas</h3><p class = "texto-sec">Música, sobre animado y RSVP conectado.</p></div></article>
+      </div>
+    </section>
+
+    <!-- 🖼️ DISEÑOS -->
+    <section id = "disenos" class = "bloque seccion">
+      <div class = "container">
+        <div class = "titulo">
+          <i class = "ph ph-images-square"></i>
+          <h1>Ver diseños</h1>
+        </div>
+
+        <div class = "grid">
+          <!-- Clásica (Agustina) -->
+          <article class = "card">
+            <a href = "https://rodrigobrun.github.io/Cumplea-osDeAgustina/" target = "_blank" rel = "noopener">
+              <div class = "thumb"><img src = "./imagenes/tarjetaAgustina.jpg.png" alt = "Clásica — Agustina"></div>
+              <div class = "info">
+                <h3>Clásica (Agustina)</h3>
+                <p>Diseño limpio, galería e info esencial.</p>
+                <div class = "tags">
+                  <span class = "tag">Elegante</span><span class = "tag">Minimalista</span><span class = "tag">Floral</span>
+                </div>
+                <div class = "precio">USD 1.000</div>
+              </div>
+            </a>
+          </article>
+
+          <!-- Clásica (Lucila) -->
+          <article class = "card">
+            <a href = "https://rodrigobrun.github.io/Cumplea-os_Lucila/" target = "_blank" rel = "noopener">
+              <div class = "thumb"><img src = "./imagenes/tarjetaLucila.png" alt = "Clásica — Lucila"></div>
+              <div class = "info">
+                <h3>Clásica (Lucila)</h3>
+                <p>Minimalista, adaptable a cualquier evento.</p>
+                <div class = "tags">
+                  <span class = "tag">Elegante</span><span class = "tag">Minimalista</span><span class = "tag">Floral</span>
+                </div>
+                <div class = "precio">USD 1.000</div>
+              </div>
+            </a>
+          </article>
+
+          <!-- Premium (demo) -->
+          <article class = "card">
+            <div class = "thumb"><img src = "./imagenes/tarejtaPremium.png" alt = "Premium"></div>
+            <div class = "info">
+              <h3>Premium</h3>
+              <p>Música, sobre animado y RSVP conectado.</p>
+              <div class = "tags">
+                <span class = "tag">Elegante</span><span class = "tag">Minimalista</span><span class = "tag">Floral</span>
+              </div>
+              <div class = "precio">USD 1.500</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 💵 PRECIOS -->
+    <section id = "precios" class = "bloque seccion">
+      <div class = "container">
+        <div class = "titulo"><i class = "ph ph-tag"></i><h1>Precios</h1></div>
+        <div class = "tabla-wrap">
+          <table class = "tabla">
+            <thead><tr><th>Plan</th><th>Incluye</th><th>Precio</th></tr></thead>
+            <tbody>
+              <tr><td>Clásica</td><td>Diseño base, galería, datos del evento</td><td>USD 1.000</td></tr>
+              <tr><td>Premium</td><td>Música, sobre animado, RSVP conectado</td><td>USD 1.500</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class = "texto-sec" style = "margin-top:10px">Extras: variantes de color, assets personalizados, cambios urgentes.</p>
+      </div>
+    </section>
+
+    <!-- ❓ FAQ -->
+    <section id = "faq" class = "bloque seccion">
+      <div class = "container">
+        <div class = "titulo"><i class = "ph ph-question"></i><h1>Preguntas frecuentes</h1></div>
+        <div class = "grid">
+          <details class = "card"><summary class = "info"><strong>¿Cuánto demora?</strong></summary><div class = "info texto-sec">Premium 48–72 hs; Clásica 24–48 hs.</div></details>
+          <details class = "card"><summary class = "info"><strong>¿Se ve bien en celular?</strong></summary><div class = "info texto-sec">Sí, mobile‑first y carga rápida.</div></details>
+          <details class = "card"><summary class = "info"><strong>¿Puedo poner música?</strong></summary><div class = "info texto-sec">Sí, incluido en Premium.</div></details>
+          <details class = "card"><summary class = "info"><strong>¿Cómo pago?</strong></summary><div class = "info texto-sec">Transferencia Itaú + envío de comprobante por WhatsApp.</div></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 📝 SOLICITAR -->
+    <section id = "solicitar" class = "bloque seccion">
+      <div class = "container">
+        <div class = "titulo"><i class = "ph ph-seal-question"></i><h1>Solicitar tarjeta</h1></div>
+        <form id = "form-solicitud" class = "form">
+          <div class = "fila">
+            <label class = "label">Tipo de evento</label>
+            <select id = "tipo-evento" class = "input select">
+              <option>Fiesta privada</option><option>Cumpleaños de 15</option>
+              <option>Cumpleaños</option><option>Fiesta sorpresa</option>
+              <option>Aniversario</option><option>Boda</option>
+            </select>
+          </div>
+          <div class = "fila fila-2">
+            <div><label class = "label">Nombre del evento</label><input id = "nombre-evento" type = "text" class = "input" placeholder = "Ej: Cumple de Lucila"></div>
+            <div><label class = "label">Fecha</label><input id = "fecha-evento" type = "date" class = "input"></div>
+          </div>
+          <div class = "fila fila-2">
+            <div><label class = "label">Canción (opcional)</label><input id = "cancion" type = "text" class = "input" placeholder = "Link o nombre"></div>
+            <div><label class = "label">Tipografía</label><input id = "tipografia" type = "text" class = "input" placeholder = "Ej: Playfair / Inter"></div>
+          </div>
+          <div class = "fila fila-2">
+            <div><label class = "label">Estilo de sobre</label><input id = "sobre" type = "text" class = "input" placeholder = "Ej: Clásico dorado"></div>
+            <div><label class = "label">Contacto</label><input id = "contacto" type = "text" class = "input" placeholder = "WhatsApp o email"></div>
+          </div>
+          <div class = "fila">
+            <label class = "label">Mensaje para la tarjeta</label>
+            <textarea id = "mensaje" class = "input textarea" rows = "4" placeholder = "Contame detalles que querés incluir..."></textarea>
+          </div>
+          <div class = "acciones"><button type = "submit" class = "btn-cta">Enviar solicitud</button></div>
+          <p id = "alerta" class = "alerta" style = "display:none">Mensaje</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- 📇 CONTACTO -->
+    <section id = "contacto" class = "bloque seccion">
+      <div class = "container grid">
+        <article class = "card"><div class = "info">
+          <h3>WhatsApp</h3><p class = "texto-sec">Consultas y coordinación.</p>
+          <p><strong>+598 92 992 182</strong></p>
+          <a class = "btn-cta" id = "cta-wapp" href = "#" target = "_blank" rel = "noopener">Escribirme</a>
+        </div></article>
+
+        <article class = "card"><div class = "info">
+          <h3>Transferencia (Itaú)</h3>
+          <p class = "texto-sec">Titular: <strong>Rodrigo Brun</strong></p>
+          <ul style = "margin:0; padding-left:18px">
+            <li><strong>Cuenta en pesos:</strong> 3739732</li>
+            <li><strong>Cuenta en dólares:</strong> 3739724</li>
+          </ul>
+          <p class = "texto-sec" style = "margin-top:8px">Enviá el comprobante por WhatsApp y seguimos.</p>
+        </div></article>
+      </div>
+    </section>
+  </main>
+
+  <!-- 🟢 Botón flotante WhatsApp -->
+  <a id = "btn-wapp" class = "btn-wapp" href = "#" target = "_blank" rel = "noopener" aria-label = "WhatsApp">
+    <i class = "ph ph-whatsapp-logo"></i>
+  </a>
+
+  <!-- 🦶 Footer -->
+  <footer class = "footer">
+    <div class = "container">
+      <p>&copy; <span id = "anio">2025</span> RB — Tienda de Invitaciones Web</p>
+    </div>
+  </footer>
+
+  <!-- ================================
+       🚀 JS (separados por módulo)
+  ================================= -->
+  <script src = "https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script type = "module" src = "./js/clases.js"></script>
+  <script src = "./js/main.js"></script>
+  <script src = "./js/home.js"></script>
+  <script src = "./js/tienda.js"></script>
+  <script src = "./js/app.js"></script>
+  <script src = "./js/modoOscuro.js"></script>
+</body>
+</html>

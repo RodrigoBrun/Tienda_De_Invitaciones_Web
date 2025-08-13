@@ -1,0 +1,50 @@
+/* =========================================
+   tienda.css — Precios, formulario, FAQ y contacto
+   - Extiende estilos base de variables.css
+========================================= */
+
+/* ======= PRECIOS ======= */
+/* Columnas más claras y números que no “bailen” */
+#precios .tabla th, 
+#precios .tabla td { vertical-align: middle; }
+#precios .tabla td:last-child { font-weight: 800; white-space: nowrap; }
+
+/* Mensajito bajo la tabla */
+#precios .texto-sec { font-size: 13.5px; }
+
+/* ======= FORMULARIO ======= */
+/* Compacto en mobile, aireado en desktop */
+#solicitar .form { padding: 18px; }
+#solicitar .label { letter-spacing: .2px; }
+#solicitar .acciones { margin-top: 4px; }
+
+/* Placeholders un pelín más suaves */
+#solicitar .input::placeholder,
+#solicitar .textarea::placeholder { color: #9a9a9a; }
+
+/* Alerta: éxito/error cambia por JS; acá sólo base */
+#solicitar .alerta { margin-top: 6px; }
+
+/* ======= FAQ (acordeón) ======= */
+#faq details.card { overflow: hidden; }
+#faq details.card summary {
+  list-style: none; cursor: pointer; user-select: none;
+  position: relative; padding-right: 30px;
+}
+#faq details.card summary::-webkit-details-marker { display: none; }
+#faq details.card summary::after {
+  content: "▾"; position: absolute; right: 14px; top: 14px; font-size: 14px; color: var(--texto-sec);
+  transition: transform .2s ease;
+}
+#faq details[open].card summary::after { transform: rotate(180deg); }
+#faq details.card .info { padding-top: 8px; }
+
+/* ======= CONTACTO ======= */
+#contacto .card .info h3 { margin-bottom: 6px; }
+#contacto .btn-cta { margin-top: 6px; }
+
+/* ======= Desktop refinements ======= */
+@media (min-width: 900px){
+  #solicitar .form { padding: 22px; }
+  #precios .tabla th, #precios .tabla td { padding: 16px 18px; }
+}
