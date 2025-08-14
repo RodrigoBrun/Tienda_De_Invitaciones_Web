@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Tienda de Invitaciones Web — RB</title>
 
   <!-- ================================
@@ -13,15 +12,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
-  <style id="aos-failsafe">
-  /* Si AOS no llega a inicializar, nada queda oculto */
-  body:not(.aos-ready) [data-aos] {
-    opacity: 1 !important;
-    transform: none !important;
-    visibility: visible !important;
-  }
-</style>
 
+  <style id="aos-failsafe">
+    /* Si AOS no llega a inicializar, nada queda oculto */
+    body:not(.aos-ready) [data-aos] {
+      opacity: 1 !important;
+      transform: none !important;
+      visibility: visible !important;
+    }
+  </style>
 
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
@@ -68,7 +67,7 @@
   <!-- ================================
        📱 Sidebar
   ================================= -->
-  <aside id="sidebar" class="sidebar">
+  <aside id="sidebar" class="sidebar" aria-label="Menú lateral">
     <div class="sidebar-header">
       <span>Menú</span>
       <button id="cerrar-sidebar" class="btn-link icon-only" aria-label="Cerrar">
@@ -86,7 +85,7 @@
   </aside>
 
   <!-- 🔳 Overlay -->
-  <div id="overlay" class="overlay"></div>
+  <div id="overlay" class="overlay" aria-hidden="true"></div>
 
   <!-- ================================
        📦 Contenido
@@ -113,9 +112,24 @@
     <!-- 🌟 CARACTERÍSTICAS -->
     <section id="caracteristicas" class="bloque seccion" data-aos="zoom-in-up">
       <div class="container grid">
-        <article class="card"><div class="info"><h3>Diseño premium</h3><p class="texto-sec">Tipografías elegantes, balance y legibilidad.</p></div></article>
-        <article class="card"><div class="info"><h3>Mobile‑first</h3><p class="texto-sec">Se ven perfectas en WhatsApp e Instagram.</p></div></article>
-        <article class="card"><div class="info"><h3>Interactivas</h3><p class="texto-sec">Música, sobre animado y RSVP conectado.</p></div></article>
+        <article class="card">
+          <div class="info">
+            <h3>Diseño premium</h3>
+            <p class="texto-sec">Tipografías elegantes, balance y legibilidad.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="info">
+            <h3>Mobile-first</h3>
+            <p class="texto-sec">Se ven perfectas en WhatsApp e Instagram.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="info">
+            <h3>Interactivas</h3>
+            <p class="texto-sec">Música, sobre animado y RSVP conectado.</p>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -131,7 +145,9 @@
           <!-- Clásica (Agustina) -->
           <article class="card">
             <a href="https://rodrigobrun.github.io/Cumplea-osDeAgustina/" target="_blank" rel="noopener">
-              <div class="thumb"><img src="./imagenes/tarjetaAgustina.jpg.png" alt="Clásica — Agustina"></div>
+              <div class="thumb">
+                <img src="./imagenes/tarjetaAgustina.jpg.png" alt="Clásica — Agustina" loading="lazy" decoding="async">
+              </div>
               <div class="info">
                 <h3>Clásica (Agustina)</h3>
                 <p>Diseño limpio, galería e info esencial.</p>
@@ -146,7 +162,9 @@
           <!-- Clásica (Lucila) -->
           <article class="card">
             <a href="https://rodrigobrun.github.io/Cumplea-os_Lucila/" target="_blank" rel="noopener">
-              <div class="thumb"><img src="./imagenes/tarjetaLucila.png" alt="Clásica — Lucila"></div>
+              <div class="thumb">
+                <img src="./imagenes/tarjetaLucila.png" alt="Clásica — Lucila" loading="lazy" decoding="async">
+              </div>
               <div class="info">
                 <h3>Clásica (Lucila)</h3>
                 <p>Minimalista, adaptable a cualquier evento.</p>
@@ -161,7 +179,9 @@
           <!-- Premium (demo) -->
           <article class="card">
             <a href="https://rodrigobrun.github.io/Invitacion_premium/" target="_blank" rel="noopener">
-              <div class="thumb"><img src="./imagenes/tarejtaPremium.png" alt="Premium"></div>
+              <div class="thumb">
+                <img src="./imagenes/tarejtaPremium.png" alt="Premium" loading="lazy" decoding="async">
+              </div>
               <div class="info">
                 <h3>Premium</h3>
                 <p>Música, sobre animado y RSVP conectado.</p>
@@ -199,7 +219,7 @@
         <div class="titulo"><i class="ph ph-question"></i><h1>Preguntas frecuentes</h1></div>
         <div class="grid">
           <details class="card"><summary class="info"><strong>¿Cuánto demora?</strong></summary><div class="info texto-sec">Premium 48–72 hs; Clásica 24–48 hs.</div></details>
-          <details class="card"><summary class="info"><strong>¿Se ve bien en celular?</strong></summary><div class="info texto-sec">Sí, mobile‑first y carga rápida.</div></details>
+          <details class="card"><summary class="info"><strong>¿Se ve bien en celular?</strong></summary><div class="info texto-sec">Sí, mobile-first y carga rápida.</div></details>
           <details class="card"><summary class="info"><strong>¿Puedo poner música?</strong></summary><div class="info texto-sec">Sí, incluido en Premium.</div></details>
           <details class="card"><summary class="info"><strong>¿Cómo pago?</strong></summary><div class="info texto-sec">Transferencia Itaú + envío de comprobante por WhatsApp.</div></details>
         </div>
@@ -207,7 +227,7 @@
     </section>
 
     <!-- 📝 SOLICITAR -->
-    <section id="solicitar" class="bloque seccion" >
+    <section id="solicitar" class="bloque seccion">
       <div class="container">
         <div class="titulo">
           <i class="ph ph-seal-question"></i>
@@ -294,7 +314,6 @@
               <i class="ph ph-caret-down" aria-hidden="true"></i>
               Elegir icono de sobre
             </button>
-
             <!-- El contenido real del panel se inyecta desde el <template id="tpl-sobres-clasica"> -->
           </fieldset>
 
@@ -330,21 +349,26 @@
     <!-- 📇 CONTACTO -->
     <section id="contacto" class="bloque seccion">
       <div class="container grid">
-        <article class="card"><div class="info">
-          <h3>WhatsApp</h3><p class="texto-sec">Consultas y coordinación.</p>
-          <p><strong>+598 92 992 182</strong></p>
-          <a class="btn-cta" id="cta-wapp" href="#" target="_blank" rel="noopener">Escribirme</a>
-        </div></article>
+        <article class="card">
+          <div class="info">
+            <h3>WhatsApp</h3>
+            <p class="texto-sec">Consultas y coordinación.</p>
+            <p><strong>+598 92 992 182</strong></p>
+            <a class="btn-cta" id="cta-wapp" href="#" target="_blank" rel="noopener">Escribirme</a>
+          </div>
+        </article>
 
-        <article class="card"><div class="info">
-          <h3>Transferencia (Itaú)</h3>
-          <p class="texto-sec">Titular: <strong>Rodrigo Brun</strong></p>
-          <ul style="margin:0; padding-left:18px">
-            <li><strong>Cuenta en pesos:</strong> 3739732</li>
-            <li><strong>Cuenta en dólares:</strong> 3739724</li>
-          </ul>
-          <p class="texto-sec" style="margin-top:8px">Enviá el comprobante por WhatsApp y seguimos.</p>
-        </div></article>
+        <article class="card">
+          <div class="info">
+            <h3>Transferencia (Itaú)</h3>
+            <p class="texto-sec">Titular: <strong>Rodrigo Brun</strong></p>
+            <ul style="margin:0; padding-left:18px">
+              <li><strong>Cuenta en pesos:</strong> 3739732</li>
+              <li><strong>Cuenta en dólares:</strong> 3739724</li>
+            </ul>
+            <p class="texto-sec" style="margin-top:8px">Enviá el comprobante por WhatsApp y seguimos.</p>
+          </div>
+        </article>
       </div>
     </section>
   </main>
@@ -393,11 +417,11 @@
         </label>
       </div>
 
-     <p class="texto-sec" style="margin-top:8px">
-  Si elegís “Personalizado” se suman <strong>150 pesos</strong> al total.  
-  El ícono puede ser un sobre u otro diseño a elección.
-</p>
-
+      <p class="texto-sec" style="margin-top:8px">
+        Si elegís “Personalizado” se suman <strong>150 pesos</strong> al total.  
+        El ícono puede ser un sobre u otro diseño a elección.
+      </p>
+    </div>
   </template>
 
   <!-- ================================

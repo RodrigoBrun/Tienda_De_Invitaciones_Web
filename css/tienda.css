@@ -187,3 +187,43 @@
   .app { padding: 0; }
   .card, .tabla { box-shadow: none !important; }
 }
+
+
+/* =========================================================
+   🛡️ AOS Fail-Safe (si AOS no inicializa, TODO queda visible)
+   - Acá NO se cambia nada: es un salvavidas.
+========================================================= */
+html:not(.aos-armed) [data-aos] {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* Cuando confirmamos que AOS está armado, recién ahí ocultamos pre-animación */
+html.aos-armed [data-aos]:not(.aos-animate) {
+  opacity: 0 !important;
+  transform: translateY(14px) !important; /* podés cambiar la dirección */
+  transition: transform .6s ease, opacity .6s ease !important;
+}
+
+/* 🩹 Visibilidad básica de secciones y compensación del header sticky */
+.seccion { 
+  display: block;
+  scroll-margin-top: var(--header-h, 68px);
+}
+
+/* ☰ Sidebar por encima de todo (que nada lo tape) */
+.header  { z-index: 10001; }
+.sidebar {
+  z-index: 10002;
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform .25s ease, visibility 0s linear .25s;
+}
+.sidebar.abierto {
+  transform: translateX(0);
+  visibility: visible;
+  transition: transform .25s ease;
+}
+
+

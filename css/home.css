@@ -1,137 +1,176 @@
 /* =========================================================
    home.css — Home (Hero, Características, Diseños, etc.)
-   Enfoque: mobile‑first, escalado en desktop, sin “parches”.
-   - Layouts claros y tipografías coherentes
-   - Thumbs con proporciones consistentes
-   - Fallback AOS limpio (sin tocar cada sección)
+   Mobile‑first. Desktop escala con media queries.
+   - Layouts limpios
+   - Thumbs con proporción estable (sin saltos)
+   - Fallback AOS centralizado (sin parches por sección)
+   - Performance: content-visibility y hover-safe
 ========================================================= */
 
-/* ========== Reglas base del home ========== */
+/* ---------- Base del home ---------- */
 
-/* Que ninguna sección se esconda bajo el header fijo */
-.seccion { scroll-margin-top: calc(var(--alto-header) + 12px); }
+/* Fallback si JS aún no definió --alto-header */
+:root { --alto-header: 64px; }
+
+.seccion{
+  /* que nada quede debajo del header fijo */
+  scroll-margin-top: calc(var(--alto-header) + 12px);
+  /* mejora performance de secciones largas en móviles */
+  content-visibility: auto;
+  contain-intrinsic-size: 800px; /* altura aproximada para evitar saltos */
+}
 
 /* Enlaces de cards ocupan toda la tarjeta (mejor área de toque) */
-.card > a {
-  display: block;
-  height: 100%;
-  color: inherit;
-  text-decoration: none;
+.card > a{
+  display:block;
+  height:100%;
+  color:inherit;
+  text-decoration:none;
 }
 
-/* Imágenes “sanas” por defecto */
-.thumb { background: var(--panel); overflow: hidden; }
-.thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* Imágenes sanas por defecto (sin estirarse) */
+.thumb{ background: var(--panel); overflow:hidden; }
+.thumb img{ display:block; width:100%; height:100%; object-fit:cover; }
 
-/* ========== HERO ========== */
-#hero.bloque {
-  /* espaciado cómodo en mobile */
-  padding-top: 44px;
-  padding-bottom: 28px;
-
-  /* centrado y composición */
-  display: grid;
-  place-items: center;
-  text-align: center;
+/* ---------- HERO ---------- */
+#hero.bloque{
+  padding-top:44px;
+  padding-bottom:28px;
+  display:grid;
+  place-items:center;
+  text-align:center;
 }
 
-#hero .titulo {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 12px;
+#hero .titulo{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:12px;
 }
-#hero .titulo i {
-  font-size: 24px;
-  color: var(--acento);
-}
-#hero .titulo h1 {
-  margin: 0;
-  font-family: var(--font-tit);
-  font-weight: 700;
-  font-size: clamp(22px, 8vw, 28px);
-  line-height: 1.15;
-  letter-spacing: -0.01em;
-  max-width: 22ch;
+#hero .titulo i{ font-size:24px; color:var(--acento); }
+#hero .titulo h1{
+  margin:0;
+  font-family:var(--font-tit);
+  font-weight:700;
+  font-size:clamp(22px,8vw,28px);
+  line-height:1.15;
+  letter-spacing:-0.01em;
+  max-width:22ch;
 }
 
-#hero .texto-sec {
-  max-width: 58ch;
-  margin: 10px auto 16px;
-  font-size: 0.95rem;
+#hero .texto-sec{
+  max-width:58ch;
+  margin:10px auto 16px;
+  font-size:.95rem;
 }
 
-#hero .acciones {
-  display: flex;
-  flex-direction: column;   /* apilado en mobile */
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
+#hero .acciones{
+  display:flex;
+  flex-direction:column;   /* apilado en mobile */
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  width:100%;
 }
 #hero .acciones .btn-cta,
-#hero .acciones .btn-link {
-  width: 100%;
-  max-width: 320px;         /* cómodo para pulgar */
-  text-align: center;
+#hero .acciones .btn-link{
+  width:100%;
+  max-width:320px;         /* cómodo para pulgar */
+  text-align:center;
 }
-#hero .acciones .btn-cta { min-width: 210px; }
+#hero .acciones .btn-cta{ min-width:210px; }
 
-/* ========== CARACTERÍSTICAS ========== */
-#caracteristicas .card .info { padding: 16px; }
-#caracteristicas .card h3 { font-size: 16px; margin-bottom: 6px; }
+/* ---------- CARACTERÍSTICAS ---------- */
+#caracteristicas .card .info{ padding:16px; }
+#caracteristicas .card h3{ font-size:16px; margin-bottom:6px; }
 
-/* ========== DISEÑOS (cards) ========== */
-/* proporción consistente y micro elevación en hover (solo puntero) */
-#disenos .thumb { aspect-ratio: 16 / 10; }
-@media (hover:hover) {
-  #disenos .card:hover { transform: translateY(-3px); }
-}
+/* ---------- DISEÑOS (cards) ---------- */
+#disenos .thumb{ aspect-ratio:16 / 10; }
 
-#disenos .info h3 { font-size: 17px; }
-#disenos .info p  { font-size: 14px; }
-
-/* ========== EJEMPLOS ========== */
-#ejemplos .thumb { aspect-ratio: 16 / 9; }
-#ejemplos figure.card .info { padding-top: 10px; }
-
-/* ========== TESTIMONIOS ========== */
-#testimonios blockquote.card { border-left: 4px solid var(--acento); }
-#testimonios blockquote.card .info p { margin: 0; }
-#testimonios blockquote.card .info p + p {
-  margin-top: 8px;
-  color: var(--texto-sec);
+/* elevación sólo si hay puntero (evita “brincos” en touch) */
+@media (hover:hover){
+  #disenos .card{ will-change: transform; transition: transform .2s ease-out; }
+  #disenos .card:hover{ transform: translateY(-3px); }
 }
 
-/* ========== Desktop refinements ========== */
-@media (min-width: 900px){
-  /* Hero con un poco más de aire en desktop */
-  #hero.bloque { padding-top: 26px; padding-bottom: 36px; }
-  #hero .titulo h1 { font-size: clamp(28px, 4.2vw, 40px); }
-  #disenos .info h3 { font-size: 18px; }
+#disenos .info h3{ font-size:17px; }
+#disenos .info p { font-size:14px; }
 
-  /* Acciones en hero en línea (si hay espacio) */
-  #hero .acciones {
-    flex-direction: row;
-    gap: 12px 16px;
-    width: auto;
+/* ---------- EJEMPLOS ---------- */
+#ejemplos .thumb{ aspect-ratio:16 / 9; }
+#ejemplos figure.card .info{ padding-top:10px; }
+
+/* ---------- TESTIMONIOS ---------- */
+#testimonios blockquote.card{ border-left:4px solid var(--acento); }
+#testimonios blockquote.card .info p{ margin:0; }
+#testimonios blockquote.card .info p + p{
+  margin-top:8px;
+  color:var(--texto-sec);
+}
+
+/* ---------- Desktop refinements ---------- */
+@media (min-width:900px){
+  #hero.bloque{ padding-top:26px; padding-bottom:36px; }
+  #hero .titulo h1{ font-size:clamp(28px,4.2vw,40px); }
+  #disenos .info h3{ font-size:18px; }
+
+  /* acciones en línea si hay espacio */
+  #hero .acciones{
+    flex-direction:row;
+    gap:12px 16px;
+    width:auto;
   }
   #hero .acciones .btn-cta,
-  #hero .acciones .btn-link {
-    width: auto;
-    max-width: none;
+  #hero .acciones .btn-link{
+    width:auto;
+    max-width:none;
   }
 }
 
-/* =========================================================
-   AOS — Fallback “limpio”
-   Si el JS detecta que AOS no cargó o está deshabilitado,
-   agrega la clase .aos-disabled al <html>. Con eso basta.
-========================================================= */
+/* ---------- AOS – Fallback limpio ----------
+   Si el init JS decide desactivar AOS (o no cargó),
+   agrega la clase .aos-disabled al <html>.
+----------------------------------------------*/
+html.aos-disabled [data-aos]{
+  opacity:1 !important;
+  visibility:visible !important;
+  transform:none !important;
+  transition:none !important;
+}
+
+/* ---------- Accesibilidad / movimiento reducido ---------- */
+@media (prefers-reduced-motion: reduce){
+  #disenos .card{ transition:none; }
+}
+
+
+/* ===== Flujo seguro para secciones y grids ===== */
+.app { overflow: visible; }                 /* que nada “corte” el flujo */
+.seccion { display: block; }                /* siempre bloque */
+
+.container { overflow: visible; }           /* evita clips al animar */
+
+.grid {                                     /* grid base si no lo tenés ya */
+  display: grid;
+  gap: 16px;
+}
+#disenos .grid { grid-template-columns: 1fr; }
+@media (min-width: 720px){
+  #disenos .grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px){
+  #disenos .grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Imágenes nunca colapsan altura mientras cargan */
+.thumb { aspect-ratio: 16 / 10; background: var(--panel); overflow: hidden; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* AOS fallback: si el script no llegó a cargar, mostramos todo */
 html.aos-disabled [data-aos]{
   opacity: 1 !important;
-  visibility: visible !important;
   transform: none !important;
+  visibility: visible !important;
   transition: none !important;
 }

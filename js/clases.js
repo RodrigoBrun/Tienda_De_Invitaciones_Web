@@ -1,107 +1,105 @@
 /* =========================================================
-   clases.js — Dominio del sistema (UMD, sin tocar el DOM)
-   - Entidades: Estilo, ProductoInvitacion, PedidoInvitacion
-   - Sistema: administra productos, tipos de evento y pedidos
-   - Expone en: window.Sistema (y CommonJS si existe)
+   clases.js — Dominio del sistema
+   - Entidades: Plan, Extra, PedidoInvitacion
+   - Clase Sistema: administra planes y cálculo de precios
+   - No toca el DOM (solo lógica y datos)
 ========================================================= */
 (function (global) {
   'use strict';
 
   // ================================
-  // 📦 Entidades
+  // 📦 Entidad Plan
   // ================================
-  class Estilo {
-    constructor(nombre){ this.nombre = nombre }
-  }
-
-  class ProductoInvitacion {
-    constructor(id, nombre, descripcion, precioBase, estilos){
-      this.id = id;
-      this.nombre = nombre;
-      this.descripcion = descripcion;
-      this.precioBase = Number(precioBase || 0); // número (USD)
-      this.estilos = Array.isArray(estilos) ? estilos : [];
+  class Plan {
+    constructor(nombre, precioUSD) {
+      this.nombre = nombre;            // string
+      this.precioUSD = Number(precioUSD) || 0; // número
     }
   }
 
+  // ================================
+  // 🎁 Entidad Extra
+  // ================================
+  class Extra {
+    constructor(nombre, precioPesos) {
+      this.nombre = nombre;            // string
+      this.precioPesos = Number(precioPesos) || 0; // número en pesos
+    }
+  }
+
+  // ================================
+  // 📝 Pedido de invitación
+  // ================================
   class PedidoInvitacion {
-    // datos: { tipoEvento, nombreEvento, fecha, cancion, tipografia, sobre, mensaje, contacto }
-    constructor(datos){
-      this.tipoEvento   = datos.tipoEvento || '';
-      this.nombreEvento = datos.nombreEvento || '';
-      this.fecha        = datos.fecha || '';
-      this.cancion      = datos.cancion || '';
-      this.tipografia   = datos.tipografia || '';
-      this.sobre        = datos.sobre || '';
-      this.mensaje      = datos.mensaje || '';
-      this.contacto     = datos.contacto || '';
-      this.estado       = 'Nuevo';     // "Nuevo" | "En proceso" | "Listo"
-      this.creado       = new Date();  // timestamp
+    constructor(plan) {
+      if (!(plan instanceof Plan)) {
+        throw new Error('El pedido debe tener un Plan válido');
+      }
+      this.plan = plan;
+      this.extras = []; // Array<Extra>
+    }
+
+    agregarExtra(extra) {
+      if (!(extra instanceof Extra)) {
+        throw new Error('El extra debe ser instancia de Extra');
+      }
+      this.extras.push(extra);
+    }
+
+    quitarExtraPorNombre(nombre) {
+      this.extras = this.extras.filter(e => e.nombre !== nombre);
+    }
+
+    getPrecioBaseUSD() {
+      return this.plan.precioUSD;
+    }
+
+    getTotalExtrasPesos() {
+      return this.extras.reduce((acc, e) => acc + e.precioPesos, 0);
+    }
+
+    getTotalUSD() {
+      return this.getPrecioBaseUSD();
     }
   }
 
   // ================================
-  // 🧠 Sistema (admin general)
+  // 🛠️ Clase Sistema (administradora)
   // ================================
   class Sistema {
-    constructor(){
-      this.productos   = []; // Array<ProductoInvitacion>
-      this.pedidos     = []; // Array<PedidoInvitacion>
-      this.tiposEvento = []; // Array<string>
-    }
-
-    // ⚙️ Precarga inicial (editá acá tu catálogo y tipos)
-    precargar(){
-      const estilos = [
-        new Estilo('Elegante'),
-        new Estilo('Minimalista'),
-        new Estilo('Floral'),
+    constructor() {
+      // Pre-carga de planes y extras disponibles
+      this.planes = [
+        new Plan('clasica', 1000),
+        new Plan('premium', 1500)
       ];
 
-      this.productos.push(
-        new ProductoInvitacion(1, 'Clásica', 'Diseño base, galería y datos del evento.', 1000, estilos)
-      );
-      this.productos.push(
-        new ProductoInvitacion(2, 'Premium', 'Música, sobre animado, RSVP conectado.', 1500, estilos)
-      );
-
-      this.tiposEvento.push(
-        'Fiesta privada',
-        'Cumpleaños de 15',
-        'Cumpleaños',
-        'Fiesta sorpresa',
-        'Aniversario',
-        'Boda'
-      );
+      this.extrasDisponibles = [
+        new Extra('Sobre personalizado', 150)
+      ];
     }
 
-    // Consultas (devolvemos copias para no mutar estado interno sin querer)
-    obtenerProductos(){ return this.productos.map(p => ({ ...p })); }
-    obtenerTiposEvento(){ return this.tiposEvento.slice(); }
-    obtenerPedidos(){ return this.pedidos.map(p => ({ ...p })); }
+    obtenerPlan(nombre) {
+      return this.planes.find(p => p.nombre.toLowerCase() === nombre.toLowerCase()) || null;
+    }
 
-    // Alta de pedido (con validaciones básicas)
-    altaPedido(datos){
-      if(!datos) throw new Error('Datos de pedido vacíos.');
-      if(!datos.tipoEvento) throw new Error('Falta tipo de evento.');
-      if(!datos.contacto) throw new Error('Falta contacto del cliente.');
-      const pedido = new PedidoInvitacion(datos);
-      this.pedidos.push(pedido);
-      return pedido;
+    obtenerExtra(nombre) {
+      return this.extrasDisponibles.find(e => e.nombre.toLowerCase() === nombre.toLowerCase()) || null;
+    }
+
+    crearPedido(nombrePlan) {
+      const plan = this.obtenerPlan(nombrePlan);
+      if (!plan) throw new Error('Plan no encontrado');
+      return new PedidoInvitacion(plan);
     }
   }
 
   // ================================
-  // 🌍 Export UMD
+  // 🌍 Exponer al ámbito global
   // ================================
   global.Sistema = Sistema;
-  global.ProductoInvitacion = ProductoInvitacion;
+  global.Plan = Plan;
+  global.Extra = Extra;
   global.PedidoInvitacion = PedidoInvitacion;
-  global.Estilo = Estilo;
 
-  // CommonJS (Node / bundlers que no usen ESM)
-  if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { Sistema, ProductoInvitacion, PedidoInvitacion, Estilo };
-  }
-
-})(typeof window !== 'undefined' ? window : this);
+})(window);
