@@ -2,6 +2,8 @@
    main.js — Utilidades globales + navegación + overlay + Wpp
    - No toca la lógica de precios ni del formulario (va en tienda.js)
    - Deja helpers en window.App para que otros archivos los usen
+   - Parches iOS Safari: onTap(), href auto para data-target,
+     smooth scroll con fallback (scrollTo) y z-closure confiable.
 ========================================================= */
 (function (global) {
   'use strict';
@@ -12,11 +14,25 @@
   const qs  = (sel, sc = document) => sc.querySelector(sel);
   const qsa = (sel, sc = document) => Array.from(sc.querySelectorAll(sel));
 
-  // Scroll suave a una sección por id (sin #)
+  // Tap handler compatible iOS: dispara en click y touchend
+  function onTap(el, handler){
+    if (!el) return;
+    // click “normal”
+    el.addEventListener('click', handler, { passive: true });
+    // algunos iOS bloquean click si hay transforms/animaciones
+    el.addEventListener('touchend', (e)=>{ e.preventDefault(); handler(e); }, { passive: false });
+  }
+
+  // Scroll suave a una sección por id (sin #) con fallback iOS viejo
   function irASeccion(id) {
     const el = document.getElementById(id);
     if (!el) return;
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    try {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch {
+      const y = el.getBoundingClientRect().top + window.pageYOffset - 12;
+      window.scrollTo(0, y);
+    }
   }
 
   // Marca activo el link que apunta a la sección id
@@ -29,9 +45,15 @@
   // 🧭 Navegación por data-target
   // ================================
   function bindNavegacion() {
+    // Asegura href="#id" en links con data-target (mejor accesibilidad y iOS)
+    qsa('.nav-link[data-target]').forEach(a => {
+      const id = a.getAttribute('data-target');
+      if (id && !a.getAttribute('href')) a.setAttribute('href', `#${id}`);
+    });
+
     // Links con data-target (navbar + sidebar + CTAs)
     qsa('.nav-link[data-target]').forEach(link => {
-      link.addEventListener('click', (e) => {
+      onTap(link, (e) => {
         e.preventDefault();
         const id = link.getAttribute('data-target');
         if (!id) return;
@@ -45,7 +67,7 @@
 
     // Anchors tradicionales (href="#id")
     qsa('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', (e) => {
+      onTap(a, (e) => {
         const hash = a.getAttribute('href');
         if (!hash || hash === '#') return;
         const id = hash.replace('#', '').trim();
@@ -93,9 +115,9 @@
     const btnClose = qs('#cerrar-sidebar');
     const overlay  = qs('#overlay');
 
-    btnOpen  && btnOpen.addEventListener('click', toggleSidebar);
-    btnClose && btnClose.addEventListener('click', cerrarSidebar);
-    overlay  && overlay.addEventListener('click', cerrarSidebar);
+    onTap(btnOpen,  toggleSidebar);
+    onTap(btnClose, cerrarSidebar);
+    onTap(overlay,  cerrarSidebar);
 
     // Cerrar con Esc
     document.addEventListener('keydown', (e) => {
@@ -157,7 +179,7 @@
   // 🌍 Exponer API mínima a otros JS
   // ================================
   global.App = Object.assign(global.App || {}, {
-    qs, qsa,
+    qs, qsa, onTap,
     irASeccion, marcarActivo,
     abrirSidebar, cerrarSidebar, toggleSidebar,
     buildWhatsAppURL
