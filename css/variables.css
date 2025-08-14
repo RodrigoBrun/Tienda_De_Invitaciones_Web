@@ -1,5 +1,5 @@
 /* =========================================================
-   variables.css — Tokens globales + base UI (mobile‑first)
+   variables.css — Tokens globales + base UI (mobile-first)
    - Colores, tipografías, radios, sombras
    - Header + navbar + sidebar (patrón propio)
    - Componentes base: grid, cards, tabla, formulario
@@ -47,6 +47,7 @@ body{
   background: var(--fondo);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent; /* iOS: evita flash azul al tocar */
 }
 
 img{ max-width: 100%; display: block; }
@@ -72,10 +73,16 @@ a{ color: inherit; }
 
 /* Header fijo con fondo translúcido y blur */
 .header{
-  position: sticky; top: 0; z-index: 60;
+  position: -webkit-sticky; /* iOS fix */
+  position: sticky; top: 0;
+  z-index: 1000; /* ↑ para quedar sobre AOS/transform */
   background: rgba(246,242,236,.92);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px); /* iOS fix */
   border-bottom: 1px solid var(--borde);
+  transform: translateZ(0); /* iOS: propia capa para stacking */
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 
 /* Fila del header: siempre en una sola línea en mobile */
@@ -103,14 +110,14 @@ a{ color: inherit; }
 .icon-only{ padding: 10px; border-radius: 12px; }
 .icon-only .ph{ font-size: 20px; }
 
-/* Sidebar móvil — off‑canvas a la derecha */
+/* Sidebar móvil — off-canvas a la derecha */
 .sidebar{
   position: fixed; top: 0; right: 0; bottom: 0; left: auto;
   width: 84%; max-width: 360px;
   background: var(--panel);
   border-left: 1px solid var(--borde);
   box-shadow: -10px 0 24px rgba(0,0,0,.08);
-  z-index: 80;
+  z-index: 1100; /* > overlay y > header */
 
   /* 🚪 Estado cerrado (fuera de pantalla y sin eventos) */
   transform: translateX(110%);     /* 110% = bien afuera */
@@ -118,10 +125,15 @@ a{ color: inherit; }
   pointer-events: none;
   will-change: transform;
   transition: transform .25s ease, visibility 0s linear .25s;
+
+  /* iOS scroll y rebote */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  transform: translateX(110%) translateZ(0); /* capa propia iOS */
 }
 /* 🚪 Estado abierto */
 .sidebar.active{
-  transform: translateX(0);
+  transform: translateX(0) translateZ(0);
   visibility: visible;
   pointer-events: auto;
   transition: transform .25s ease;
@@ -133,6 +145,8 @@ a{ color: inherit; }
   padding: 12px 16px;
   border-bottom: 1px solid var(--borde);
   font-weight: 700;
+  padding-left: calc(16px + env(safe-area-inset-left));
+  padding-right: calc(16px + env(safe-area-inset-right));
 }
 
 /* Links del panel */
@@ -146,6 +160,7 @@ a{ color: inherit; }
   border-radius: 12px;
   border: 1px solid transparent;
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent; /* iOS */
 }
 .sidebar-links .nav-link:hover{ background: #efe8dd; }
 .sidebar-links .nav-link .ph{ color: var(--acento-2); }
@@ -172,6 +187,7 @@ a{ color: inherit; }
   border-radius: 12px;
   cursor: pointer;
   text-decoration: none;
+  -webkit-appearance: none; /* iOS: control más consistente */
 }
 .btn-link:hover{ background: #efe8dd; }
 
@@ -186,6 +202,7 @@ a{ color: inherit; }
   box-shadow: var(--sombra);
   text-decoration: none;
   display: inline-flex; align-items: center; gap: 8px;
+  -webkit-appearance: none; /* iOS */
 }
 .btn-cta:hover{ filter: brightness(1.03); }
 
@@ -208,7 +225,7 @@ section{ scroll-margin-top: calc(var(--alto-header) + 10px); }
 /* =========================================================
    🧱 Grids y 🃏 Cards (reutilizables)
 ========================================================= */
-/* Móvil: 1 columna por defecto (mobile‑first) */
+/* Móvil: 1 columna por defecto (mobile-first) */
 .grid{ display: grid; grid-template-columns: 1fr; gap: 14px; }
 .grid-2{ display: grid; grid-template-columns: 1fr; gap: 14px; }
 .grid-3{ display: grid; grid-template-columns: 1fr; gap: 14px; }
@@ -220,6 +237,7 @@ section{ scroll-margin-top: calc(var(--alto-header) + 10px); }
   box-shadow: var(--sombra);
   overflow: hidden;
   transition: transform .2s ease, box-shadow .2s ease;
+  transform: translateZ(0); /* iOS: capa propia evita glitches */
 }
 .card:hover{ transform: translateY(-2px); box-shadow: 0 12px 30px rgba(0,0,0,.08); }
 
@@ -298,6 +316,7 @@ section{ scroll-margin-top: calc(var(--alto-header) + 10px); }
   outline: none;
   transition: box-shadow .15s ease, border-color .15s ease;
   font-size: 15px;
+  -webkit-appearance: none; /* iOS inputs más consistentes */
 }
 .textarea{ min-height: 110px; resize: vertical; }
 .input:focus, .select:focus, .textarea:focus{
@@ -323,7 +342,8 @@ section{ scroll-margin-top: calc(var(--alto-header) + 10px); }
   width: 54px; height: 54px; border-radius: 50%;
   display: grid; place-items: center; text-decoration: none;
   background: #25d366; color: white; box-shadow: var(--sombra);
-  z-index: 70;
+  z-index: 1050; /* sobre overlay (75) y bajo sidebar (1100) */
+  transform: translateZ(0);
 }
 
 .footer{
@@ -331,6 +351,8 @@ section{ scroll-margin-top: calc(var(--alto-header) + 10px); }
   background: #fff;
   color: var(--texto-sec);
   font-size: 14px;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 .footer .container{ padding: 16px 0; }
 
@@ -388,7 +410,8 @@ section{ scroll-margin-top: calc(var(--alto-header) + 10px); }
   opacity: 0;
   visibility: hidden;
   transition: opacity .2s ease, visibility 0s linear .2s;
-  z-index: 75;                   /* debajo de la sidebar (80), encima del contenido */
+  z-index: 1050;                 /* debajo de sidebar (1100), encima de contenido */
+  transform: translateZ(0);      /* iOS: su propia capa */
 }
 .overlay.active{
   opacity: 1;
@@ -401,4 +424,3 @@ section{ scroll-margin-top: calc(var(--alto-header) + 10px); }
   background: var(--panel);      /* #fff sólido */
   /* resto de reglas siguen igual… */
 }
-
