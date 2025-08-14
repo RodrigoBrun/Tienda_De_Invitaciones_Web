@@ -34,58 +34,59 @@
 </head>
 
 <body>
-  <!-- ================================
-       🧭 Navbar
-  ================================= -->
-  <header class="header">
-    <div class="container header-row">
-      <div class="brand">
-        <i class="ph ph-seal-check"></i>
-        <span class="brand-title">Invitaciones Digitales</span>
-      </div>
-
-      <nav class="nav hide-mobile">
-        <a class="btn-link nav-link" data-target="hero">Inicio</a>
-        <a class="btn-link nav-link" data-target="disenos">Ver diseños</a>
-        <a class="btn-link nav-link" data-target="precios">Precios</a>
-        <a class="btn-link nav-link" data-target="faq">FAQ</a>
-        <a class="btn-link nav-link" data-target="contacto">Contacto</a>
-      </nav>
-
-      <div class="header-actions">
-        <button id="btn-modo-oscuro" class="btn-link icon-only" aria-label="Modo oscuro">
-          <i class="ph ph-moon"></i>
-        </button>
-        <a class="btn-cta" href="#solicitar">Solicitar</a>
-        <button id="hamburguesa" class="btn-link icon-only hide-desktop" aria-label="Abrir menú">
-          <i class="ph ph-list"></i>
-        </button>
-      </div>
+<!-- ================================
+     🧭 Navbar
+================================= -->
+<header class="header">
+  <div class="container header-row">
+    <div class="brand">
+      <i class="ph ph-seal-check"></i>
+      <span class="brand-title">Invitaciones Digitales</span>
     </div>
-  </header>
 
-  <!-- ================================
-       📱 Sidebar
-  ================================= -->
-  <aside id="sidebar" class="sidebar" aria-label="Menú lateral">
-    <div class="sidebar-header">
-      <span>Menú</span>
-      <button id="cerrar-sidebar" class="btn-link icon-only" aria-label="Cerrar">
-        <i class="ph ph-x"></i>
+    <nav class="nav hide-mobile">
+      <a class="btn-link nav-link" href="#hero" data-target="hero">Inicio</a>
+      <a class="btn-link nav-link" href="#disenos" data-target="disenos">Ver diseños</a>
+      <a class="btn-link nav-link" href="#precios" data-target="precios">Precios</a>
+      <a class="btn-link nav-link" href="#faq" data-target="faq">FAQ</a>
+      <a class="btn-link nav-link" href="#contacto" data-target="contacto">Contacto</a>
+    </nav>
+
+    <div class="header-actions">
+      <button id="btn-modo-oscuro" class="btn-link icon-only" aria-label="Modo oscuro">
+        <i class="ph ph-moon"></i>
+      </button>
+      <a class="btn-cta" href="#solicitar">Solicitar</a>
+      <button id="hamburguesa" class="btn-link icon-only hide-desktop" aria-label="Abrir menú" aria-expanded="false">
+        <i class="ph ph-list"></i>
       </button>
     </div>
-    <nav class="sidebar-links">
-      <a class="nav-link" data-target="hero"><i class="ph ph-house"></i> Inicio</a>
-      <a class="nav-link" data-target="disenos"><i class="ph ph-images-square"></i> Ver diseños</a>
-      <a class="nav-link" data-target="precios"><i class="ph ph-tag"></i> Precios</a>
-      <a class="nav-link" data-target="solicitar"><i class="ph ph-seal-question"></i> Solicitar</a>
-      <a class="nav-link" data-target="faq"><i class="ph ph-question"></i> FAQ</a>
-      <a class="nav-link" data-target="contacto"><i class="ph ph-phone-call"></i> Contacto</a>
-    </nav>
-  </aside>
+  </div>
+</header>
 
-  <!-- 🔳 Overlay -->
-  <div id="overlay" class="overlay" aria-hidden="true"></div>
+<!-- ================================
+     📱 Sidebar
+================================= -->
+<aside id="sidebar" class="sidebar" aria-label="Menú lateral">
+  <div class="sidebar-header">
+    <span>Menú</span>
+    <button id="cerrar-sidebar" class="btn-link icon-only" aria-label="Cerrar">
+      <i class="ph ph-x"></i>
+    </button>
+  </div>
+  <nav class="sidebar-links">
+    <a class="nav-link" href="#hero" data-target="hero"><i class="ph ph-house"></i> Inicio</a>
+    <a class="nav-link" href="#disenos" data-target="disenos"><i class="ph ph-images-square"></i> Ver diseños</a>
+    <a class="nav-link" href="#precios" data-target="precios"><i class="ph ph-tag"></i> Precios</a>
+    <a class="nav-link" href="#solicitar" data-target="solicitar"><i class="ph ph-seal-question"></i> Solicitar</a>
+    <a class="nav-link" href="#faq" data-target="faq"><i class="ph ph-question"></i> FAQ</a>
+    <a class="nav-link" href="#contacto" data-target="contacto"><i class="ph ph-phone-call"></i> Contacto</a>
+  </nav>
+</aside>
+
+<!-- 🔳 Overlay -->
+<div id="overlay" class="overlay" aria-hidden="true"></div>
+
 
   <!-- ================================
        📦 Contenido
